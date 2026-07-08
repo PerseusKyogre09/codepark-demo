@@ -11,7 +11,43 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Semantic Static Fallback for AI Crawlers & Bots (Vercel Server-Side Rendering / No-JS fallback) -->
+      <header style="padding: 20px; font-family: sans-serif;">
+        <h1>CodePark — Collaborative Real-Time Browser-Based IDE</h1>
+        <p>A high-performance, real-time collaborative development environment running entirely inside the web browser.</p>
+      </header>
+
+      <main style="padding: 20px; font-family: sans-serif;">
+        <section id="features">
+          <h2>Key Features</h2>
+          <ul>
+            <li><strong>Real-time Collaboration:</strong> Instant cursor tracking, multiplayer editing using Yjs CRDTs, presence metrics, and built-in chat.</li>
+            <li><strong>Interactive Terminals:</strong> A functional xterm.js terminal emulator with built-in commands and Python/NodeJS command runners.</li>
+            <li><strong>Git Integration:</strong> Stage, commit, push, create branches, and view git history and file diffs completely client-side.</li>
+            <li><strong>In-Browser Live Execution:</strong> Test and run Python or Javascript scripts directly within sandboxed virtual sessions.</li>
+            <li><strong>Social Graph & Devlogs:</strong> Connect with teammates, publish project releases, and check out developer achievements.</li>
+          </ul>
+        </section>
+
+        <section id="pages">
+          <h2>Available Pages in Demo</h2>
+          <ul>
+            <li><a href="/auth">Sign In / Username Entry</a> - Access the session with a custom profile handle.</li>
+            <li><a href="/dashboard">Main Dashboard</a> - Explore list of templates like ai-dashboard, rest-api-server, and react-boilerplate.</li>
+            <li><a href="/editor">Interactive Collaborative Workspace (IDE)</a> - Complete coding layout with file tree, terminal, status bar, and git panel.</li>
+            <li><a href="/docs">Product Documentation</a> - Comprehensive guide on quickstart, sandboxing, resources, and API references.</li>
+            <li><a href="/devlogs">Devlogs & Blogs</a> - Read dev diaries, system design specs, and latency optimization reports.</li>
+            <li><a href="/achievements">Achievements & Pro Membership</a> - View badges, progress tracks, and Stripe subscription pricing models.</li>
+          </ul>
+        </section>
+
+        <section id="about">
+          <h2>Marketing & Investor Overview</h2>
+          <p>CodePark is designed for lightning-fast collaborative onboarding. Our custom architecture enables dev environments to boot in milliseconds by bringing execution and synchronization straight to the browser layer. Try our interactive marketing preview and invite active team collaborators offline.</p>
+        </section>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
