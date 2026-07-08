@@ -1,0 +1,22 @@
+.card-swap-container {
+  position: relative;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+}
+
+.card-swap-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  transition: box-shadow 0.3s ease;
+  user-select: none;
+}
+
+.card-swap-item:hover {
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+}

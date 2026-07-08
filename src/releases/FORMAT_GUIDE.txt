@@ -1,0 +1,23 @@
+# Release Notes Markdown Format
+
+Each release lives in its own `.md` file inside this folder. Use the template below:
+
+---
+id: "2025-12"
+version: "2025.12"
+codename: "Nebula Velocity"
+date: "2025-12-18"
+summary: "Short human-readable headline for the release."
+---
+
+## Section Title
+
+- Key update written as a bullet.
+- Add as many bullet rows as needed.
+
+> Optional callouts can be written with blockquotes.
+
+- Always keep the frontmatter (the YAML block between the `---` lines) at the top.
+- Fields `id`, `version`, `codename`, and `date` are required.
+- `summary` populates the release card subtitle; omit it to auto-pick the first paragraph.
+- Dates must be ISO formatted (`YYYY-MM-DD`) so sorting works.
