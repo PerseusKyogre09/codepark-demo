@@ -38,7 +38,7 @@ export function MarketingNavbar() {
 
     return (
         <nav
-            className="fixed top-0 w-full z-50 px-6 py-6"
+            className="fixed top-0 w-full z-50 px-5 md:px-6 py-5 md:py-6"
             style={{
                 background: themeColors.terminalBg
             }}
@@ -77,7 +77,7 @@ export function MarketingNavbar() {
                     className="font-black tracking-tighter flex items-center gap-2 hover:opacity-80 transition-opacity"
                     onClick={() => navigate('/')}
                 >
-                    <img src="/logo.png" alt="CodePark" className="h-10 w-10 object-contain" />
+                    <img src="/logo.png" alt="CodePark" className="h-12 w-12 md:h-[52px] md:w-[52px] object-contain" />
                     <span style={{
                         color: themeColors.terminalPrimary,
                         fontFamily: 'Space Grotesk',
@@ -88,7 +88,7 @@ export function MarketingNavbar() {
                 </button>
 
                 {/* Desktop Navigation */}
-                <div className="hidden md:flex items-center space-x-8">
+                <div className="hidden md:flex items-center space-x-2.5">
                     <button 
                         onClick={() => navigate('/docs')}
                         className="font-label text-xs uppercase tracking-[0.2em] transition-colors hover:text-primary"

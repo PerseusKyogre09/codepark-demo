@@ -202,12 +202,12 @@ export default function HomePage() {
 
       {/* Hero */}
       <section className="w-full px-4 md:px-8 lg:px-12 xl:px-20 pt-12 md:pt-20 pb-16 overflow-x-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-12 items-center">
           {/* Left Column: Text & SVG Illustration */}
           <div className="lg:col-span-4 flex flex-col justify-between h-full space-y-8">
             <div className="lg:pl-12 relative z-30">
               <h1
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-none tracking-tight mb-6 text-foreground text-left pt-6"
+                className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[0.92] tracking-tight mb-5 text-foreground text-left pt-4"
                 style={{ fontFamily: "'Patrick Hand', cursive" }}
               >
                 Code together.
@@ -218,28 +218,38 @@ export default function HomePage() {
               </h1>
 
               <p
-                className="text-base md:text-lg text-muted-foreground mb-8 text-left max-w-lg leading-relaxed"
-                style={{ fontFamily: "'Patrick Hand', cursive", fontSize: '1.25rem' }}
+                className="text-base md:text-lg text-muted-foreground mb-6 text-left max-w-lg leading-relaxed"
               >
-                Instant environments, real-time collaboration, and AI that understands your entire codebase.
+                CodePark is a cloud development environment for building together in real time.
                 <br />
-                <span className="font-semibold text-foreground">No setup.</span> Just code.
+                Work side by side with teammates and get AI assistance that understands your project.
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 mb-8">
+              <div className="flex flex-wrap items-center gap-3 mb-4">
                 <button
                   onClick={handleCTA}
-                  className="px-6 py-3 bg-primary text-primary-foreground font-semibold border-2 border-foreground dark:border-white hand-drawn-border hover:bg-primary/95 transition-all text-sm flex items-center gap-2 shadow-[3px_3px_0px_currentColor] dark:shadow-[3px_3px_0px_#fff]"
+                  className="px-6 py-3.5 bg-primary text-primary-foreground border-[2.5px] border-foreground dark:border-white rounded-[10px] hand-drawn-border hover:bg-primary/95 active:translate-y-[1px] transition-all duration-200 text-[1.05rem] leading-none flex items-center gap-2 shadow-[2px_2px_0px_currentColor] dark:shadow-[2px_2px_0px_#fff] min-w-[220px] justify-center"
+                  style={{ fontFamily: "'Patrick Hand', cursive" }}
                 >
                   Start Coding Instantly
                   <ArrowRight size={16} />
                 </button>
                 <button
                   onClick={handleCTA}
-                  className="px-6 py-3 border-2 border-foreground dark:border-white text-foreground font-semibold hand-drawn-border hover:bg-muted transition-all text-sm shadow-[3px_3px_0px_currentColor]"
+                  className="px-6 py-3.5 border-[2.5px] border-foreground/70 dark:border-white/70 rounded-[10px] text-foreground/80 hand-drawn-border hover:bg-muted/40 active:translate-y-[1px] transition-all duration-200 text-[1.05rem] leading-none shadow-[1.5px_1.5px_0px_currentColor] opacity-95"
+                  style={{ fontFamily: "'Patrick Hand', cursive" }}
                 >
                   See How It Works
                 </button>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm md:text-[1.02rem] text-muted-foreground">
+                {["Real-time collaboration", "AI-powered development", "Instant environments", "No local setup"].map((item) => (
+                  <span key={item} className="inline-flex items-center gap-2" style={{ fontFamily: "'Patrick Hand', cursive" }}>
+                    <span className="size-1.5 rounded-full bg-primary/70" />
+                    <span>{item}</span>
+                  </span>
+                ))}
               </div>
 
             </div>
@@ -290,7 +300,7 @@ export default function HomePage() {
 
           {/* Right Column: Custom Mockup Editor */}
           <div
-            className="lg:col-span-8 hidden lg:flex flex-col items-center justify-center relative z-30 w-full max-w-none transition-all duration-300"
+            className="lg:col-span-8 hidden lg:flex flex-col items-center justify-center relative z-30 w-full max-w-none transition-all duration-300 lg:pl-4 xl:pl-8"
             style={{
               transform: `translateX(${editorX})`,
               width: editorWidth
