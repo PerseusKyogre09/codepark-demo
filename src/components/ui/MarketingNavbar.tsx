@@ -112,7 +112,7 @@ export function MarketingNavbar() {
                         /faq
                     </button>
                     <button 
-                        onClick={() => navigate('/devlog')}
+                        onClick={() => navigate('/changelog')}
                         className="font-label text-xs uppercase tracking-[0.2em] transition-colors hover:text-primary"
                         style={{
                             color: themeColors.terminalSecondary,
@@ -120,18 +120,7 @@ export function MarketingNavbar() {
                             fontSize: '11px'
                         }}
                     >
-                        /devlog
-                    </button>
-                    <button 
-                        onClick={() => navigate('/releases')}
-                        className="font-label text-xs uppercase tracking-[0.2em] transition-colors hover:text-primary"
-                        style={{
-                            color: themeColors.terminalSecondary,
-                            fontFamily: 'JetBrains Mono',
-                            fontSize: '11px'
-                        }}
-                    >
-                        /releases
+                        /changelog
                     </button>
                     <button 
                         onClick={() => navigate('/pro')}
@@ -314,18 +303,11 @@ export function MarketingNavbar() {
                         /faq
                     </button>
                     <button 
-                        onClick={() => { navigate('/devlog'); setMobileMenuOpen(false) }}
+                        onClick={() => { navigate('/changelog'); setMobileMenuOpen(false) }}
                         className="block w-full text-left px-4 py-2 transition-colors"
                         style={{ color: themeColors.terminalSecondary, fontFamily: 'JetBrains Mono' }}
                     >
-                        /devlog
-                    </button>
-                    <button 
-                        onClick={() => { navigate('/releases'); setMobileMenuOpen(false) }}
-                        className="block w-full text-left px-4 py-2 transition-colors"
-                        style={{ color: themeColors.terminalSecondary, fontFamily: 'JetBrains Mono' }}
-                    >
-                        /releases
+                        /changelog
                     </button>
                     <button
                         onClick={() => { navigate('/pro'); setMobileMenuOpen(false) }}

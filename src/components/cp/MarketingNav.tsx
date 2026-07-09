@@ -16,11 +16,9 @@ export function MarketingNav() {
   const toggleTheme = () => updateSettings({ uiTheme: theme === "dark" ? "light" : "dark" });
 
   const links = [
-    { label: "Features", path: "/" },
     { label: "Pricing", path: "/#pricing" },
     { label: "Docs", path: "/docs" },
-    { label: "Devlogs", path: "/devlog" },
-    { label: "Releases", path: "/releases" },
+    { label: "Changelog", path: "/changelog" },
   ];
 
   const handleNav = (path: string) => {

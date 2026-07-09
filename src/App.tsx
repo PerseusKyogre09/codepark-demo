@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { Suspense, lazy, useEffect } from 'react'
 import { Toaster } from 'sonner'
+import { Navigate } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
 import { ThemeProvider, useTheme } from './contexts/ThemeContext'
 import { AuthProvider } from './contexts/AuthContext'
@@ -149,7 +150,8 @@ function App() {
                       <Route path="/stripe" element={<StripePage />} />
                       <Route path="/docs/*" element={<DocsPage />} />
                       <Route path="/devlog" element={<DevlogPage />} />
-                      <Route path="/releases" element={<ReleaseNotesPage />} />
+                      <Route path="/changelog" element={<ReleaseNotesPage />} />
+                      <Route path="/releases" element={<Navigate to="/changelog" replace />} />
 
                       {/* Test routes */}
                       <Route path="/theme-test" element={<ThemeTestPage />} />

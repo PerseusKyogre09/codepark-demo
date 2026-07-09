@@ -11,18 +11,13 @@ export function MarketingFooter() {
             <p className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">Product</p>
             <ul className="space-y-1.5">
               <li>
-                <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Features
-                </Link>
-              </li>
-              <li>
                 <Link to="/#pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Pricing
                 </Link>
               </li>
               <li>
-                <Link to="/releases" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Release Notes
+                <Link to="/changelog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Changelog
                 </Link>
               </li>
               <li>
@@ -51,8 +46,8 @@ export function MarketingFooter() {
             <p className="text-xs font-semibold text-foreground uppercase tracking-wider mb-3">Community</p>
             <ul className="space-y-1.5">
               <li>
-                <Link to="/devlog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Devlogs
+                <Link to="/changelog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Changelog
                 </Link>
               </li>
               <li>

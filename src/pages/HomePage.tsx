@@ -112,7 +112,7 @@ export default function HomePage() {
     // 4. Stick Figure (Parker)
     parkerHeightMobile: '55%',      // Height scale
     parkerHeightDesktop: '60%',
-    parkerXMobile: '0px',          // Horizontal (left) position on the hill
+    parkerXMobile: '150px',          // Horizontal (left) position on the hill
     parkerXDesktop: '290px',
     parkerYMobile: '20px',          // Vertical (bottom) position from container base
     parkerYDesktop: '87px',
@@ -125,7 +125,7 @@ export default function HomePage() {
 
     // 6. SceneryRight (Right side background decoration behind editor)
     sceneryRightWidthMobile: '320px',
-    sceneryRightWidthDesktop: '600px',
+    sceneryRightWidthDesktop: '1000px',
     sceneryRightXMobile: '0px',
     sceneryRightXDesktop: '210px',
     sceneryRightYMobile: '-30px',
@@ -133,28 +133,28 @@ export default function HomePage() {
 
     // 7. Individual Step SVG configurations
     // Step 1: Parker Sleep
-    step1SvgWidthMobile: '100px',
-    step1SvgWidthDesktop: '140px',
-    step1SvgXMobile: '0px',
-    step1SvgXDesktop: '0px',
-    step1SvgYMobile: '0px',
-    step1SvgYDesktop: '0px',
+    step1SvgWidthMobile: '250px',
+    step1SvgWidthDesktop: '250px',
+    step1SvgXMobile: '-45px',
+    step1SvgXDesktop: '-90px',
+    step1SvgYMobile: '-35px',
+    step1SvgYDesktop: '-25px',
 
     // Step 2: Fist Bump
-    step2SvgWidthMobile: '100px',
-    step2SvgWidthDesktop: '140px',
-    step2SvgXMobile: '0px',
-    step2SvgXDesktop: '0px',
-    step2SvgYMobile: '0px',
-    step2SvgYDesktop: '0px',
+    step2SvgWidthMobile: '200px',
+    step2SvgWidthDesktop: '190px',
+    step2SvgXMobile: '-15px',
+    step2SvgXDesktop: '-60px',
+    step2SvgYMobile: '-30px',
+    step2SvgYDesktop: '-37px',
 
     // Step 3: Parker Friend
-    step3SvgWidthMobile: '100px',
-    step3SvgWidthDesktop: '140px',
-    step3SvgXMobile: '0px',
-    step3SvgXDesktop: '0px',
-    step3SvgYMobile: '0px',
-    step3SvgYDesktop: '0px',
+    step3SvgWidthMobile: '250px',
+    step3SvgWidthDesktop: '230px',
+    step3SvgXMobile: '-60px',
+    step3SvgXDesktop: '-60px',
+    step3SvgYMobile: '-50px',
+    step3SvgYDesktop: '-50px',
   };
   // ──────────────────────────────────────────────────────────────────────────────────
 
@@ -363,42 +363,49 @@ export default function HomePage() {
             {STEPS.map((s, idx) => {
               const svgMap = ["/assets/homepage/Parker_sleep.svg", "/assets/homepage/fist_bump.svg", "/assets/homepage/parker_friend.svg"];
               const svgSrc = svgMap[idx];
-              
+
               // Get config values dynamically
-              const stepWidth = isMobile 
-                ? (config as any)[`step${idx + 1}SvgWidthMobile`] 
+              const stepWidth = isMobile
+                ? (config as any)[`step${idx + 1}SvgWidthMobile`]
                 : (config as any)[`step${idx + 1}SvgWidthDesktop`];
-              const stepX = isMobile 
-                ? (config as any)[`step${idx + 1}SvgXMobile`] 
+              const stepX = isMobile
+                ? (config as any)[`step${idx + 1}SvgXMobile`]
                 : (config as any)[`step${idx + 1}SvgXDesktop`];
-              const stepY = isMobile 
-                ? (config as any)[`step${idx + 1}SvgYMobile`] 
+              const stepY = isMobile
+                ? (config as any)[`step${idx + 1}SvgYMobile`]
                 : (config as any)[`step${idx + 1}SvgYDesktop`];
 
               return (
                 <div key={s.n} className="flex flex-col md:flex-row items-center md:items-start w-full relative">
-                  <div className="flex-1 flex flex-col items-center max-w-xs mx-auto relative p-6 min-h-[220px] justify-end">
-                    {/* SVG background layered behind the text */}
-                    <img
-                      src={svgSrc}
-                      alt={s.title}
-                      className="absolute object-contain homepage-svg-invert z-0 pointer-events-none"
-                      style={{
-                        width: stepWidth,
-                        left: stepX,
-                        bottom: stepY,
-                        maxWidth: 'none'
-                      }}
-                    />
-                    
-                    {/* Text content layered in front */}
-                    <div className="relative z-10 text-center w-full">
+                  <div className="flex-1 flex flex-col items-center max-w-xs mx-auto relative p-6 w-full">
+                    {/* Header: Number on Left, SVG on Right */}
+                    <div className="flex items-center gap-6 mb-6 w-full relative h-24">
+                      {/* Number circle */}
                       <div
-                        className="size-10 rounded-full border-2 border-primary text-primary font-semibold text-sm flex items-center justify-center mx-auto mb-4 bg-background/80 backdrop-blur-sm"
+                        className="size-10 rounded-full border-2 border-primary text-primary font-semibold text-sm flex items-center justify-center shrink-0 bg-background/80"
                         style={{ fontFamily: "var(--font-display)" }}
                       >
                         {s.n}
                       </div>
+
+                      {/* SVG container */}
+                      <div className="flex-1 relative h-full">
+                        <img
+                          src={svgSrc}
+                          alt={s.title}
+                          className="absolute object-contain homepage-svg-invert pointer-events-none"
+                          style={{
+                            width: stepWidth,
+                            left: stepX,
+                            bottom: stepY,
+                            maxWidth: 'none'
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Text content */}
+                    <div className="text-center w-full relative z-10">
                       <h3 className="font-semibold text-foreground mb-2">{s.title}</h3>
                       <p className="text-sm text-muted-foreground leading-relaxed">{s.body}</p>
                     </div>
