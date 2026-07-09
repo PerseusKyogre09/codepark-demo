@@ -15,7 +15,7 @@ draft: false
 
 # AI Assistant Overview
 
-CodePark's AI assistant is context-aware — it knows your project structure, your recent changes, and your coding patterns.
+CodePark's AI assistant is designed to help you work inside the editor without leaving the project context.
 
 ## What the AI can do
 
@@ -24,6 +24,10 @@ CodePark's AI assistant is context-aware — it knows your project structure, yo
 - **Debug errors** — paste an error message and get a precise explanation with a fix
 - **Refactor code** — ask it to simplify, optimise, or rename across files
 - **Explain concepts** — get explanations tuned to your language and stack
+
+## Why the assistant exists
+
+The goal is not to replace reading the code. The goal is to shorten the time it takes to understand a workspace, explore options, and draft a safe first pass.
 
 ## ContextBase
 
@@ -37,13 +41,13 @@ This means the AI can answer questions like "how does authentication work in my 
 
 ### Enabling ContextBase
 
-ContextBase is enabled by default for all projects. Toggle it in **Settings → AI → ContextBase**.
+ContextBase is enabled by default for all projects. Toggle it in **Project Settings → General** where available in the project UI.
 
 You can also trigger a manual re-scan from the AI panel sidebar if you've made major structural changes.
 
 ### Privacy
 
-ContextBase processes your code locally within your container. It only sends relevant **excerpts** to the AI model when you explicitly ask a question. Your full codebase is never transmitted in bulk.
+ContextBase processes your code locally within the workspace. It only sends relevant excerpts to the AI model when you explicitly ask a question. Your full codebase is never transmitted in bulk.
 
 Files matching your `.gitignore` are excluded from indexing by default.
 
@@ -57,8 +61,35 @@ The panel has two modes:
 
 **Inline mode** — highlight code in the editor, press `Ctrl+K`, and get inline suggestions or rewrites without leaving your current file.
 
+## When to use AI
+
+Use AI when you need faster understanding, not when you already know the exact change and can make it directly.
+
+Good use cases:
+
+- Exploring a new codebase
+- Summarising a subsystem
+- Drafting test cases
+- Comparing implementation approaches
+
 ## Limitations
 
 - The AI does not have internet access during generation
 - Maximum context window is approximately 32,000 tokens
 - The AI cannot execute code on your behalf — it can only write and suggest; you run it
+
+## Common mistakes
+
+- Treating AI output as authoritative without checking the code
+- Asking broad questions that do not reference the project
+- Forgetting that the assistant only knows what ContextBase can retrieve
+
+## Troubleshooting
+
+If AI responses feel stale, refresh the workspace context and retry with a more specific prompt.
+
+## Related docs
+
+- [Working with AI in the Editor](/docs/ai/working-with-ai-in-the-editor)
+- [What is ContextBase?](/docs/contextbase/what-is-contextbase)
+- [Creating Your First Project](/docs/getting-started/creating-first-project)

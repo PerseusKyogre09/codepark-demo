@@ -1,6 +1,6 @@
 ---
 title: API Overview
-description: The CodePark REST API — authentication, rate limits, and available endpoints.
+description: Learn how the CodePark REST API is organized and which resources are available today.
 category: API
 order: 1
 icon: code-2
@@ -15,7 +15,7 @@ draft: false
 
 # API Overview
 
-CodePark provides a REST API for programmatic access to your projects, sessions, and user data.
+CodePark provides a REST API for programmatic access to your projects, sessions, collaboration state, and integrations.
 
 ## Base URL
 
@@ -23,78 +23,70 @@ CodePark provides a REST API for programmatic access to your projects, sessions,
 https://codepark.qzz.io/api
 ```
 
-All endpoints require authentication unless explicitly marked as public.
+Most endpoints require authentication. The main exceptions are login and OAuth redirect endpoints that start an auth flow.
 
 ## Authentication
 
-Use **Bearer token** authentication. Obtain a token from **Settings → API Keys**.
+Use the `cp_auth` session cookie for browser-authenticated requests, or a short-lived WebSocket token for session transport. When the frontend calls the REST API, it usually sends the authenticated session automatically.
 
 ```bash
 curl https://codepark.qzz.io/api/projects \
-  -H "Authorization: Bearer YOUR_API_KEY"
+  --cookie "cp_auth=YOUR_SESSION_COOKIE"
 ```
 
-API keys can be scoped to specific permissions (read-only, read-write, admin).
+There is no public API key management page in the current product.
 
-## Rate limits
+## What the API is for
 
-| Tier | Requests/minute | Requests/hour |
-|------|----------------|---------------|
-| Free | 30 | 500 |
-| Pro | 200 | 5000 |
-
-Rate limit headers are included in every response:
-
-```
-X-RateLimit-Limit: 200
-X-RateLimit-Remaining: 195
-X-RateLimit-Reset: 1720000000
-```
+The API exists to support project management, project creation, collaborator management, GitHub integration, and real-time session plumbing.
 
 ## Response format
 
-All responses are JSON. Errors follow the format:
+Most endpoints return JSON. Errors also return JSON with a `detail` field from FastAPI.
+
+Example:
 
 ```json
 {
-  "error": "not_found",
-  "message": "Project with id 'abc123' not found",
-  "status": 404
+  "detail": "Project not found"
 }
 ```
 
-## Key endpoints
+## Main API areas
 
 ### Projects
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | `GET` | `/projects` | List all your projects |
-| `POST` | `/projects` | Create a new project |
+| `POST` | `/projects/create` | Create a new project and runtime session |
 | `GET` | `/projects/:id` | Get project details |
+| `POST` | `/projects/:id/open` | Open or resolve a live session |
+| `POST` | `/projects/:id/access-requests` | Request access to a project |
 | `DELETE` | `/projects/:id` | Delete a project |
 
 ### Sessions
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/projects/:id/sessions` | List active sessions |
-| `POST` | `/projects/:id/sessions` | Start a new session |
+| `GET` | `/sessions/:session_id/participants` | List live participants |
+| `POST` | `/sessions/:session_id/persist` | Persist session state |
+| `POST` | `/sessions/:session_id/heartbeat` | Refresh session activity |
 
-### Files
+### GitHub
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/projects/:id/files` | List files in workspace |
-| `GET` | `/projects/:id/files/:path` | Read a file |
-| `PUT` | `/projects/:id/files/:path` | Write a file |
+| `GET` | `/github/status` | Check GitHub connection status |
+| `GET` | `/github/login` | Start the GitHub OAuth flow |
+| `GET` | `/github/callback` | Finish GitHub OAuth |
+| `GET` | `/github/repos` | List connected GitHub repositories |
+| `POST` | `/github/import` | Import a GitHub repository |
+| `DELETE` | `/github/disconnect` | Disconnect GitHub |
 
-Full API reference with request/response schemas is coming soon.
+## Related docs
 
-## SDKs
-
-Official SDKs are planned for Node.js and Python. Until then, the REST API works with any HTTP client.
-
-## Webhooks
-
-Webhook support (project events, session events) is on the roadmap for Q3 2026.
+- [API Authentication](/docs/api/authentication)
+- [Projects API](/docs/api/projects-api)
+- [Collaboration API](/docs/api/collaboration-api)
+- [Error Handling](/docs/api/error-handling)

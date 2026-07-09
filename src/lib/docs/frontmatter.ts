@@ -23,7 +23,7 @@ export function parseFrontmatter(raw: string): {
   const content = raw.slice(match[0].length);
   const data = parseYaml(yamlBlock);
 
-  return { data: data as DocFrontmatter, content };
+  return { data: data as unknown as DocFrontmatter, content };
 }
 
 // ─── Minimal YAML parser ─────────────────────────────────────────────────────

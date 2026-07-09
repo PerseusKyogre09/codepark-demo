@@ -54,9 +54,9 @@ export function loadDocs(): DocEntry[] {
       categorySlug,
       categoryLabel,
       frontmatter: {
+        ...frontmatter,
         title: frontmatter.title || labelFromSlug(parts[parts.length - 1]),
         description: frontmatter.description || '',
-        ...frontmatter,
         category: categoryLabel,
       },
       content,

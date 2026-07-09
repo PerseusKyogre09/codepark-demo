@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-description: Common issues and how to fix them in CodePark.
+description: Practical fixes for the most common problems you may run into in CodePark.
 category: Troubleshooting
 order: 1
 icon: wrench
@@ -15,62 +15,40 @@ draft: false
 
 # Troubleshooting
 
-Common issues and their solutions.
+This section covers the most common issues you may encounter while using CodePark and the fastest way to recover.
 
-## Container won't start
+## How to use this section
 
-**Symptoms:** The editor shows "Starting environment…" indefinitely, or shows a red error banner.
+Start with the page that matches the symptom you are seeing, then follow the fixes in order. Most problems are caused by one of four things:
 
-**Solutions:**
+- A stale session
+- A runtime or environment mismatch
+- A permissions or authentication problem
+- A temporary network or provider issue
 
-1. **Rebuild the environment** — Open the command palette (`Ctrl+Shift+P`) and run **Rebuild Environment**
-2. **Check `codepark.toml`** — A syntax error in your config file can prevent the container from starting
-3. **Check resource limits** — Free tier containers have 512 MB RAM. If your install script requires more, it will fail silently
+## Troubleshooting pages
 
-## Editor not syncing
+- [Environment Won't Start](/docs/troubleshooting/environment-wont-start)
+- [Build Failures](/docs/troubleshooting/build-failures)
+- [AI Assistant Not Responding](/docs/troubleshooting/ai-assistant-not-responding)
+- [Collaboration Issues](/docs/troubleshooting/collaboration-issues)
+- [Connection Problems](/docs/troubleshooting/connection-problems)
+- [Authentication Problems](/docs/troubleshooting/authentication-problems)
+- [Import Failures](/docs/troubleshooting/import-failures)
 
-**Symptoms:** Your edits don't appear for other collaborators, or you see a "Disconnected" badge.
+## When to escalate
 
-**Solutions:**
+If you have tried the page-specific fixes and the issue remains, capture:
 
-1. Check your internet connection
-2. Hard-refresh the page (`Ctrl+Shift+R`)
-3. If the issue persists, both participants should leave and rejoin the session
+- The exact symptom
+- The project ID or session ID
+- The last thing you changed
+- Any terminal or browser error message
 
-## Terminal not responding
+That information makes it much easier to separate a local workspace issue from a backend issue.
 
-**Symptoms:** The terminal appears but doesn't respond to keystrokes.
+## Related docs
 
-**Solutions:**
-
-1. Click inside the terminal area to ensure it has focus
-2. Send a reset signal: press `Ctrl+C` then `Enter`
-3. Close the terminal tab and open a new one
-
-## Port preview not working
-
-**Symptoms:** Your app is running but the preview URL shows a blank page or 502 error.
-
-**Solutions:**
-
-1. Make sure your app is listening on `0.0.0.0`, not `127.0.0.1`
-2. Ensure the port is declared in `codepark.toml` under `ports`
-3. Wait ~5 seconds after starting your server — port detection has a small delay
-
-## AI responses are irrelevant
-
-**Symptoms:** The AI gives generic answers that don't reference your actual code.
-
-**Solutions:**
-
-1. Trigger a manual ContextBase re-scan from the AI panel
-2. Check that ContextBase is enabled in **Settings → AI**
-3. Ensure your files are not in `.gitignore` (ContextBase respects it)
-
-## Getting more help
-
-If you're still stuck, you can:
-
-- Post in the community forum (link in the footer)
-- File a bug report via the feedback button in the editor toolbar
-- Email support at support@codepark.io (Pro tier)
+- [API Error Handling](/docs/api/error-handling)
+- [Understanding the Workspace](/docs/getting-started/understanding-workspace)
+- [Project Settings](/docs/projects/project-settings)

@@ -22,8 +22,6 @@ const CATEGORY_ORDER: string[] = [
   'deployment',
   'troubleshooting',
   'faq',
-  'releases',
-  'changelog',
 ];
 
 let _registry: DocRegistry | null = null;
