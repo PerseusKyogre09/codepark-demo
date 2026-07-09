@@ -145,8 +145,9 @@ export function AppShell({ children }: AppShellProps) {
         }`}
       >
         {/* Logo */}
-        <div
-          className={`h-14 flex items-center border-b border-border shrink-0 ${
+        <button
+          onClick={() => navigate("/")}
+          className={`h-14 flex items-center border-b border-border shrink-0 hover:opacity-85 active:opacity-75 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring w-full ${
             collapsed ? "justify-center px-0" : "lg:px-4 px-0 justify-center lg:justify-start"
           }`}
         >
@@ -158,7 +159,7 @@ export function AppShell({ children }: AppShellProps) {
               <span className="hidden lg:flex"><Logo /></span>
             </>
           )}
-        </div>
+        </button>
 
         {/* Nav */}
         <nav className="flex-1 py-3 flex flex-col gap-0.5 px-2 overflow-y-auto">
