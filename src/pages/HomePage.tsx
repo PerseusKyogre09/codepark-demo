@@ -130,6 +130,31 @@ export default function HomePage() {
     sceneryRightXDesktop: '210px',
     sceneryRightYMobile: '-30px',
     sceneryRightYDesktop: '-200px',
+
+    // 7. Individual Step SVG configurations
+    // Step 1: Parker Sleep
+    step1SvgWidthMobile: '100px',
+    step1SvgWidthDesktop: '140px',
+    step1SvgXMobile: '0px',
+    step1SvgXDesktop: '0px',
+    step1SvgYMobile: '0px',
+    step1SvgYDesktop: '0px',
+
+    // Step 2: Fist Bump
+    step2SvgWidthMobile: '100px',
+    step2SvgWidthDesktop: '140px',
+    step2SvgXMobile: '0px',
+    step2SvgXDesktop: '0px',
+    step2SvgYMobile: '0px',
+    step2SvgYDesktop: '0px',
+
+    // Step 3: Parker Friend
+    step3SvgWidthMobile: '100px',
+    step3SvgWidthDesktop: '140px',
+    step3SvgXMobile: '0px',
+    step3SvgXDesktop: '0px',
+    step3SvgYMobile: '0px',
+    step3SvgYDesktop: '0px',
   };
   // ──────────────────────────────────────────────────────────────────────────────────
 
@@ -161,6 +186,8 @@ export default function HomePage() {
   const sceneryRightWidth = isMobile ? config.sceneryRightWidthMobile : config.sceneryRightWidthDesktop;
   const sceneryRightX = isMobile ? config.sceneryRightXMobile : config.sceneryRightXDesktop;
   const sceneryRightY = isMobile ? config.sceneryRightYMobile : config.sceneryRightYDesktop;
+
+
 
   const handleCTA = () => {
     if (isAuthenticated) {
@@ -263,7 +290,7 @@ export default function HomePage() {
 
           {/* Right Column: Custom Mockup Editor */}
           <div
-            className="lg:col-span-8 flex flex-col items-center justify-center relative z-30 w-full max-w-none transition-all duration-300"
+            className="lg:col-span-8 hidden lg:flex flex-col items-center justify-center relative z-30 w-full max-w-none transition-all duration-300"
             style={{
               transform: `translateX(${editorX})`,
               width: editorWidth
@@ -332,19 +359,56 @@ export default function HomePage() {
               Three steps to coding together
             </h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {STEPS.map((s) => (
-              <div key={s.n} className="text-center">
-                <div
-                  className="size-10 rounded-full border-2 border-primary text-primary font-semibold text-sm flex items-center justify-center mx-auto mb-4"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  {s.n}
+          <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-8 md:gap-4">
+            {STEPS.map((s, idx) => {
+              const svgMap = ["/assets/homepage/Parker_sleep.svg", "/assets/homepage/fist_bump.svg", "/assets/homepage/parker_friend.svg"];
+              const svgSrc = svgMap[idx];
+              
+              // Get config values dynamically
+              const stepWidth = isMobile 
+                ? (config as any)[`step${idx + 1}SvgWidthMobile`] 
+                : (config as any)[`step${idx + 1}SvgWidthDesktop`];
+              const stepX = isMobile 
+                ? (config as any)[`step${idx + 1}SvgXMobile`] 
+                : (config as any)[`step${idx + 1}SvgXDesktop`];
+              const stepY = isMobile 
+                ? (config as any)[`step${idx + 1}SvgYMobile`] 
+                : (config as any)[`step${idx + 1}SvgYDesktop`];
+
+              return (
+                <div key={s.n} className="flex flex-col md:flex-row items-center md:items-start w-full relative">
+                  <div className="flex-1 flex flex-col items-center max-w-xs mx-auto relative p-6 min-h-[220px] justify-end">
+                    {/* SVG background layered behind the text */}
+                    <img
+                      src={svgSrc}
+                      alt={s.title}
+                      className="absolute object-contain homepage-svg-invert z-0 pointer-events-none"
+                      style={{
+                        width: stepWidth,
+                        left: stepX,
+                        bottom: stepY,
+                        maxWidth: 'none'
+                      }}
+                    />
+                    
+                    {/* Text content layered in front */}
+                    <div className="relative z-10 text-center w-full">
+                      <div
+                        className="size-10 rounded-full border-2 border-primary text-primary font-semibold text-sm flex items-center justify-center mx-auto mb-4 bg-background/80 backdrop-blur-sm"
+                        style={{ fontFamily: "var(--font-display)" }}
+                      >
+                        {s.n}
+                      </div>
+                      <h3 className="font-semibold text-foreground mb-2">{s.title}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{s.body}</p>
+                    </div>
+                  </div>
+                  {idx < 2 && (
+                    <ArrowRight className="hidden md:block text-primary/50 size-5 shrink-0 self-center mx-2 relative z-20" />
+                  )}
                 </div>
-                <h3 className="font-semibold text-foreground mb-2">{s.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{s.body}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
