@@ -62,7 +62,7 @@ export default function EmptyStatesPage() {
       icon: <Pen size={22} />,
       title: "No devlogs",
       message: "You haven't written a devlog yet. Share what you're building.",
-      action: { label: "Write your first devlog", onClick: () => navigate("/devlog") },
+      action: { label: "Write your first devlog", onClick: () => navigate("/dashboard/devlogs") },
     },
     {
       icon: <Plus size={22} />,
