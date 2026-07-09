@@ -147,7 +147,7 @@ function App() {
                       <Route path="/about" element={<AboutPage />} />
                       <Route path="/pro" element={<ProPage />} />
                       <Route path="/stripe" element={<StripePage />} />
-                      <Route path="/docs" element={<DocsPage />} />
+                      <Route path="/docs/*" element={<DocsPage />} />
                       <Route path="/devlog" element={<DevlogPage />} />
                       <Route path="/releases" element={<ReleaseNotesPage />} />
 
@@ -278,7 +278,7 @@ function App() {
                           }
                         />
                         <Route
-                          path="/dashboard/docs"
+                          path="/dashboard/docs/*"
                           element={
                             <ErrorBoundary level="page">
                               <DocsPage />
