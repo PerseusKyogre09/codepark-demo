@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { Suspense, lazy, useEffect } from 'react'
 import { Toaster } from 'sonner'
-import { Navigate } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
 import { ThemeProvider, useTheme } from './contexts/ThemeContext'
 import { AuthProvider } from './contexts/AuthContext'
@@ -38,9 +37,6 @@ const FAQPage = lazy(() => import('./pages/FAQPage'))
 const ReleaseNotesPage = lazy(() => import('./pages/ReleaseNotesPage'))
 const AboutPage = lazy(() => import('./pages/AboutPage'))
 const DocsPage = lazy(() => import('./pages/DocsPage'))
-const DevlogPage = lazy(() => import('./pages/DevlogPage'))
-const CollaborativeIde = lazy(() => import('./pages/devlog/CollaborativeIde'))
-const LatencyDeepDive = lazy(() => import('./pages/devlog/LatencyDeepDive'))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 const UsernameSetupPage = lazy(() => import('./pages/UsernameSetupPage'))
 const AuthPage = lazy(() => import('./pages/AuthPage'))
@@ -149,9 +145,7 @@ function App() {
                       <Route path="/pro" element={<ProPage />} />
                       <Route path="/stripe" element={<StripePage />} />
                       <Route path="/docs/*" element={<DocsPage />} />
-                      <Route path="/devlog" element={<DevlogPage />} />
-                      <Route path="/changelog" element={<ReleaseNotesPage />} />
-                      <Route path="/releases" element={<Navigate to="/changelog" replace />} />
+                      <Route path="/changelog/*" element={<ReleaseNotesPage />} />
 
                       {/* Test routes */}
                       <Route path="/theme-test" element={<ThemeTestPage />} />
@@ -330,11 +324,6 @@ function App() {
                       />
                       <Route path="/playground" element={<Suspense fallback={<LoadingScreen />}><GuestEditorPage /></Suspense>} />
 
-                      <Route path="/devlog/collaborative-ide" element={<CollaborativeIde />} />
-                      <Route path="/devlog/latency-deep-dive" element={<LatencyDeepDive />} />
-                      <Route path="/devlog/remote-pairing" element={<CollaborativeIde />} />
-                      <Route path="/devlog/wasm-future" element={<LatencyDeepDive />} />
-                      <Route path="/devlog/web-terminal" element={<CollaborativeIde />} />
 
                       {/* 404 Not Found */}
                       <Route path="*" element={<NotFoundPage />} />

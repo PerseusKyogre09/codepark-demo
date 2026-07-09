@@ -1,116 +1,170 @@
-import { useState, useEffect } from "react";
-import { CheckCircle2, AlertTriangle } from "lucide-react";
+import { useLocation, useParams } from 'react-router-dom';
+import { Calendar, Clock, Link2, ArrowRight } from 'lucide-react';
+import { DocMarkdown } from '../components/docs/DocMarkdown';
+import { extractTOC } from '../lib/docs/toc';
+import { loadReleases } from '../lib/changelog/loader';
+import { ReleaseTypeBadge } from '../components/changelog/ReleaseTypeBadge';
+import { ChangelogTOC } from '../components/changelog/ChangelogTOC';
+import { ReleaseNav } from '../components/changelog/ReleaseNav';
 
-interface Release {
-  id: string;
-  project: string;
-  version: string;
-  date: string;
-  headline: string;
-  notes: string[];
-  breaking: boolean;
+const releases = loadReleases();
+
+function formatDate(date: string) {
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 }
 
 export default function ReleaseNotesPage() {
-  const [releases, setReleases] = useState<Release[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { '*': slugParam } = useParams();
+  const location = useLocation();
+  const slug = slugParam?.replace(/^\/+/, '') ?? '';
+  const release = slug ? releases.find((item) => item.slug === slug) : undefined;
 
-  useEffect(() => {
-    fetch("/api/releases/public")
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setReleases(data);
-        } else {
-          console.error("Invalid releases data:", data);
-        }
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Failed to load official releases:", err);
-        setLoading(false);
-      });
-  }, []);
+  if (slug && !release) {
+    return (
+      <div className="min-h-full bg-background pt-20">
+        <div className="mx-auto max-w-4xl px-4 md:px-8 py-16">
+          <h1 className="text-3xl font-semibold text-foreground mb-3">Release not found</h1>
+          <p className="text-muted-foreground">That release note does not exist yet.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (release) {
+    const toc = extractTOC(release.content);
+    const index = releases.findIndex((item) => item.slug === release.slug);
+    const prev = releases[index - 1];
+    const next = releases[index + 1];
+    const permalink = `${window.location.origin}${location.pathname}`;
+
+    return (
+      <div className="min-h-full bg-background pt-20">
+        <div className="mx-auto grid max-w-6xl gap-8 px-4 md:px-8 lg:grid-cols-[minmax(0,1fr)_280px] py-10 md:py-14">
+          <main className="min-w-0">
+            <div className="mb-6 flex flex-wrap items-center gap-3">
+              <ReleaseTypeBadge type={release.frontmatter.type} />
+              {release.frontmatter.status && (
+                <span className="rounded-full border border-border px-2.5 py-1 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+                  {release.frontmatter.status}
+                </span>
+              )}
+              <span className="rounded-full border border-border px-2.5 py-1 text-[11px] font-mono text-muted-foreground">
+                v{release.frontmatter.version}
+              </span>
+            </div>
+
+            <h1 className="text-4xl md:text-5xl font-semibold text-foreground leading-tight mb-4">
+              {release.frontmatter.title}
+            </h1>
+
+            <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-6">
+              <span className="inline-flex items-center gap-1.5">
+                <Calendar size={14} />
+                {formatDate(release.frontmatter.date)}
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <Clock size={14} />
+                {release.readingTime}
+              </span>
+              {release.frontmatter.author && <span>By {release.frontmatter.author}</span>}
+            </div>
+
+            <p className="max-w-3xl text-base leading-relaxed text-muted-foreground mb-8">
+              {release.frontmatter.summary}
+            </p>
+
+            <div className="mb-8">
+              <button
+                onClick={() => navigator.clipboard.writeText(permalink)}
+                className="inline-flex items-center gap-2 rounded-full border border-border px-3 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Link2 size={15} />
+                Copy link
+              </button>
+            </div>
+
+            <article className="release-notes prose prose-invert max-w-none">
+              <DocMarkdown content={release.content} />
+            </article>
+
+            <div className="mt-10">
+              <ReleaseNav prev={prev} next={next} permalink={permalink} />
+            </div>
+          </main>
+
+          <aside className="hidden lg:block">
+            <div className="sticky top-24 space-y-4">
+              <div className="rounded-xl border border-border bg-card/60 p-4">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                  Release
+                </p>
+                <p className="text-sm text-foreground">{release.frontmatter.version}</p>
+                <p className="text-sm text-muted-foreground">{formatDate(release.frontmatter.date)}</p>
+              </div>
+              <ChangelogTOC items={toc} />
+            </div>
+          </aside>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-full bg-background pt-14">
-      <div className="max-w-2xl mx-auto px-4 md:px-8 py-10 md:py-16">
-        <div className="mb-10 text-center md:text-left">
-          <h1
-            className="text-3xl md:text-4xl font-bold text-foreground mb-4"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Releases & Updates
+    <div className="min-h-full bg-background pt-20">
+      <div className="mx-auto max-w-6xl px-4 md:px-8 py-10 md:py-14">
+        <div className="max-w-2xl">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
+            Changelog
+          </p>
+          <h1 className="text-4xl md:text-5xl font-semibold text-foreground leading-tight mb-4">
+            Release notes for CodePark
           </h1>
-          <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-            Marking product milestones and updates for CodePark services.
+          <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+            Every release ships here first. Browse the timeline to see what changed, what improved, and what to expect next.
           </p>
         </div>
 
-        {loading ? (
-          <div className="text-center py-12 text-sm text-muted-foreground">
-            Loading releases...
-          </div>
-        ) : releases.length === 0 ? (
-          <div className="text-center py-12 text-sm text-muted-foreground border border-dashed border-border rounded-lg">
-            No official releases found.
-          </div>
-        ) : (
-          <div className="space-y-6">
-            {releases.map((release, i) => (
-              <article
-                key={release.id}
-                className="bg-card border border-border rounded-lg overflow-hidden"
-              >
-                {/* Header */}
-                <div className="flex items-start justify-between p-5 border-b border-border">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span
-                        className="font-mono text-sm font-semibold text-foreground"
-                        style={{ fontFamily: "var(--font-mono)" }}
-                      >
-                        {release.version}
+        <div className="mt-10 space-y-4">
+          {releases.map((release, index) => (
+            <a
+              key={release.slug}
+              href={`/changelog/${release.slug}`}
+              className="group block rounded-2xl border border-border bg-card/60 p-5 md:p-6 transition-all hover:border-primary/30 hover:bg-muted/40"
+            >
+              <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                <div className="min-w-0">
+                  <div className="mb-3 flex flex-wrap items-center gap-2">
+                    <span className="rounded-full border border-border px-2.5 py-1 text-[11px] font-mono text-foreground">
+                      v{release.frontmatter.version}
+                    </span>
+                    {index === 0 && (
+                      <span className="rounded-full border border-emerald-500/25 bg-emerald-500/15 px-2.5 py-1 text-[11px] font-medium text-emerald-200">
+                        Latest
                       </span>
-                      {i === 0 && (
-                        <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-semibold">
-                          Latest
-                        </span>
-                      )}
-                      {release.breaking && (
-                        <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-error/10 text-error text-[10px] font-semibold">
-                          <AlertTriangle size={9} />
-                          Breaking
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-xs text-muted-foreground">
-                      <span className="font-medium text-foreground">{release.project}</span>
-                      {" · "}
-                      {release.date}
-                    </p>
+                    )}
+                    <ReleaseTypeBadge type={release.frontmatter.type} />
                   </div>
-                </div>
-
-                {/* Body */}
-                <div className="p-5">
-                  <p className="text-sm font-medium text-foreground mb-3 leading-snug">
-                    {release.headline}
+                  <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+                    {release.frontmatter.title}
+                  </h2>
+                  <p className="max-w-3xl text-sm md:text-[15px] leading-relaxed text-muted-foreground">
+                    {release.frontmatter.summary}
                   </p>
-                  <ul className="space-y-2">
-                    {release.notes.map((note) => (
-                      <li key={note} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <CheckCircle2 size={13} className="text-success mt-0.5 shrink-0" />
-                        {note}
-                      </li>
-                    ))}
-                  </ul>
                 </div>
-              </article>
-            ))}
-          </div>
-        )}
+                <div className="flex items-center gap-2 text-sm text-muted-foreground shrink-0">
+                  <span>{formatDate(release.frontmatter.date)}</span>
+                  <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
+
