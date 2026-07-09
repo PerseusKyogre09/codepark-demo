@@ -122,6 +122,14 @@ export default function HomePage() {
     editorXDesktop: '40px',         // Shift editor horizontally (positive = towards right, negative = towards left)
     editorWidthMobile: '100%',
     editorWidthDesktop: '100%',     // Control the width of the editor container
+
+    // 6. SceneryRight (Right side background decoration behind editor)
+    sceneryRightWidthMobile: '320px',
+    sceneryRightWidthDesktop: '600px',
+    sceneryRightXMobile: '0px',
+    sceneryRightXDesktop: '210px',
+    sceneryRightYMobile: '-30px',
+    sceneryRightYDesktop: '-200px',
   };
   // ──────────────────────────────────────────────────────────────────────────────────
 
@@ -149,6 +157,10 @@ export default function HomePage() {
 
   const editorX = isMobile ? config.editorXMobile : config.editorXDesktop;
   const editorWidth = isMobile ? config.editorWidthMobile : config.editorWidthDesktop;
+
+  const sceneryRightWidth = isMobile ? config.sceneryRightWidthMobile : config.sceneryRightWidthDesktop;
+  const sceneryRightX = isMobile ? config.sceneryRightXMobile : config.sceneryRightXDesktop;
+  const sceneryRightY = isMobile ? config.sceneryRightYMobile : config.sceneryRightYDesktop;
 
   const handleCTA = () => {
     if (isAuthenticated) {
@@ -178,7 +190,7 @@ export default function HomePage() {
                 <span className="text-primary">Effortlessly.</span>
               </h1>
 
-              <p 
+              <p
                 className="text-base md:text-lg text-muted-foreground mb-8 text-left max-w-lg leading-relaxed"
                 style={{ fontFamily: "'Patrick Hand', cursive", fontSize: '1.25rem' }}
               >
@@ -257,7 +269,21 @@ export default function HomePage() {
               width: editorWidth
             }}
           >
-            <HeroMockupEditor />
+            {/* SceneryRight Background */}
+            <img
+              src="/assets/homepage/SceneryRight.svg"
+              alt="Scenery Right"
+              className="absolute object-contain z-10 homepage-svg-invert pointer-events-none"
+              style={{
+                width: sceneryRightWidth,
+                left: sceneryRightX,
+                bottom: sceneryRightY,
+                maxWidth: 'none'
+              }}
+            />
+            <div className="relative z-20 w-full">
+              <HeroMockupEditor />
+            </div>
           </div>
         </div>
       </section>
