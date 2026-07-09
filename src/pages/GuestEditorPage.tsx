@@ -190,7 +190,7 @@ print(f"ZIP_START:{base64.b64encode(bio.getvalue()).decode()}:ZIP_END")
                         <ArrowLeft className="w-5 h-5" />
                     </Button>
                     <div className="flex items-center gap-2">
-                        <img src="/logo.svg" alt="CodePark" className="w-6 h-6" />
+                        <img src="/logo.svg" alt="CodePark" className="w-6 h-6 logo-svg-invert" />
                         <span className="font-bold text-lg">CodePark</span>
                     </div>
                 </div>

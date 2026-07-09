@@ -11,7 +11,7 @@ export function Logo({ size = 30, showText = true, className = "" }: LogoProps) 
         src="/logo.svg"
         alt="CodePark Logo"
         style={{ width: `${size}px`, height: "auto" }}
-        className="object-contain"
+        className="object-contain logo-svg-invert"
       />
       {showText && (
         <div className="flex items-center gap-1.5">

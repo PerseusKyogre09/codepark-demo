@@ -84,7 +84,7 @@ export default function AuthPage() {
                         <img
                             src="/logo.svg"
                             alt="CodePark Logo"
-                            className="relative w-12 h-12 object-contain"
+                            className="relative w-12 h-12 object-contain logo-svg-invert"
                         />
                     </div>
                     <div className="flex items-center justify-center gap-2 mb-2">

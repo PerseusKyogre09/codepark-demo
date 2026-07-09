@@ -596,7 +596,10 @@ body {
   }
 }
 
-.dark .homepage-svg-invert {
+.dark .homepage-svg-invert,
+.dark img[src="/logo.svg"],
+.dark img[src$="logo.svg"],
+.dark .logo-svg-invert {
   filter: invert(1) hue-rotate(180deg);
 }
 
