@@ -592,7 +592,7 @@ export default function DashboardPage() {
               heroProject={heroProject}
               handleResume={handleResume}
               sortedFriends={sortedFriends}
-              isRunning={runningWorkspaceId === heroProject.id}
+              isRunning={true}
             />
           </section>
         )}
