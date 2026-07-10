@@ -2,7 +2,7 @@
   "id": "team",
   "slug": "team",
   "name": "Team",
-  "description": "For groups that need shared billing and workspace controls.",
+  "description": "Best for startups and small teams that need shared billing, org controls, and pooled resources.",
   "summary": "Designed for small teams that want predictable collaboration and stronger limits.",
   "order": 3,
   "status": "active",
@@ -10,30 +10,196 @@
   "featured": false,
   "currency": "INR",
   "prices": {
-    "INR": { "amount": 3499, "display": "₹3,499", "note": "per workspace / month" },
-    "USD": { "amount": 42, "display": "$42", "note": "per workspace / month" }
+    "INR": {
+      "amount": 1499,
+      "display": "₹1,499",
+      "note": "per workspace / month"
+    },
+    "USD": {
+      "amount": 42,
+      "display": "$42",
+      "note": "per workspace / month"
+    },
+    "EUR": {
+      "amount": 39,
+      "display": "€39",
+      "note": "per workspace / month"
+    },
+    "GBP": {
+      "amount": 35,
+      "display": "£35",
+      "note": "per workspace / month"
+    },
+    "JPY": {
+      "amount": 6300,
+      "display": "¥6,300",
+      "note": "per workspace / month"
+    }
   },
   "billing": {
     "monthly": {
-      "INR": { "amount": 3499, "display": "₹3,499", "note": "per workspace / month" },
-      "USD": { "amount": 42, "display": "$42", "note": "per workspace / month" }
+      "INR": {
+        "amount": 1499,
+        "display": "₹1,499",
+        "note": "per workspace / month"
+      },
+      "USD": {
+        "amount": 42,
+        "display": "$42",
+        "note": "per workspace / month"
+      },
+      "EUR": {
+        "amount": 39,
+        "display": "€39",
+        "note": "per workspace / month"
+      },
+      "GBP": {
+        "amount": 35,
+        "display": "£35",
+        "note": "per workspace / month"
+      },
+      "JPY": {
+        "amount": 6300,
+        "display": "¥6,300",
+        "note": "per workspace / month"
+      }
     },
     "yearly": {
-      "INR": { "amount": 34999, "display": "₹34,999", "note": "per workspace / year · save 17%" },
-      "USD": { "amount": 420, "display": "$420", "note": "per workspace / year · save 17%" }
+      "INR": {
+        "amount": 14390,
+        "display": "₹14,390",
+        "note": "per workspace / year · save 17%"
+      },
+      "USD": {
+        "amount": 420,
+        "display": "$420",
+        "note": "per workspace / year · save 17%"
+      },
+      "EUR": {
+        "amount": 390,
+        "display": "€390",
+        "note": "per workspace / year · save 17%"
+      },
+      "GBP": {
+        "amount": 350,
+        "display": "£350",
+        "note": "per workspace / year · save 17%"
+      },
+      "JPY": {
+        "amount": 63000,
+        "display": "¥63,000",
+        "note": "per workspace / year · save 17%"
+      }
     }
   },
   "price": [
-    { "currency": "USD", "amount": 42, "interval": "month", "display": "$42", "note": "per workspace" }
+    {
+      "currency": "USD",
+      "amount": 42,
+      "interval": "month",
+      "display": "$42",
+      "note": "per workspace"
+    }
   ],
   "ctaLabel": "Talk to Sales",
+  "highlights": [
+    "Unlimited projects (org-wide) · 15 concurrent workspaces",
+    "100,000 AI credits / mo (pooled) · all models",
+    "Cross-project ContextBase search",
+    "5 custom domains · 500 GB bandwidth / mo",
+    "Org management: roles, permissions, shared billing",
+    "Up to 50 seats · 1 organization",
+    "Priority chat + email · 24h response"
+  ],
   "features": [
-    { "id": "projects.unlimited", "status": "included" },
-    { "id": "runtime.pro", "status": "included" },
-    { "id": "ai.high", "status": "included" },
-    { "id": "support.priority", "status": "included" },
-    { "id": "team.collaborators.unlimited", "status": "included" },
-    { "id": "environments.private", "status": "included" }
+    {
+      "id": "projects.private",
+      "value": "Unlimited"
+    },
+    {
+      "id": "projects.public",
+      "value": true
+    },
+    {
+      "id": "collaboration.realtime",
+      "value": true
+    },
+    {
+      "id": "environments.community",
+      "value": true
+    },
+    {
+      "id": "environments.private",
+      "value": true
+    },
+    {
+      "id": "runtime.standard",
+      "value": true
+    },
+    {
+      "id": "runtime.pro",
+      "value": true
+    },
+    {
+      "id": "storage",
+      "value": "100 GB pooled"
+    },
+    {
+      "id": "ai.credits",
+      "value": "100 k / mo pooled"
+    },
+    {
+      "id": "ai.models",
+      "value": "All models"
+    },
+    {
+      "id": "ai.basic",
+      "value": true
+    },
+    {
+      "id": "ai.high",
+      "value": true
+    },
+    {
+      "id": "contextbase.basic",
+      "value": true
+    },
+    {
+      "id": "contextbase.advanced",
+      "value": true
+    },
+    {
+      "id": "deployments.bandwidth",
+      "value": "500 GB / mo"
+    },
+    {
+      "id": "deployments.custom_domain",
+      "value": "5 domains"
+    },
+    {
+      "id": "deployments.blueprint",
+      "value": true
+    },
+    {
+      "id": "snapshots",
+      "value": "100 pooled"
+    },
+    {
+      "id": "team.orgs",
+      "value": "1 org · up to 50 seats"
+    },
+    {
+      "id": "team.collaborators",
+      "value": "Unlimited"
+    },
+    {
+      "id": "support.community",
+      "value": false
+    },
+    {
+      "id": "support.priority",
+      "value": "Chat + email · 24 h"
+    }
   ],
   "comparison": {
     "projects": "Unlimited",

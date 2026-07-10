@@ -1,19 +1,170 @@
-{
-  "id": "compute",
-  "slug": "compute",
-  "name": "Compute Pack",
-  "description": "Additional runtime capacity for demanding projects.",
-  "summary": "Use this when workloads outgrow the included runtime limits.",
-  "order": 2,
-  "status": "active",
-  "visibility": "public",
-  "featured": false,
-  "currency": "INR",
-  "prices": {
-    "INR": { "amount": 1999, "display": "₹1,999" },
-    "USD": { "amount": 25, "display": "$25" }
+[
+  {
+    "id": "compute.gpu.5h",
+    "slug": "compute-gpu-5h",
+    "name": "GPU Pack — 5 Hours",
+    "description": "For free or Pro users training or fine-tuning occasionally.",
+    "resource": "+5 GPU hours · valid 60 days",
+    "category": "Compute",
+    "order": 10,
+    "status": "active",
+    "visibility": "public",
+    "currency": "INR",
+    "prices": {
+      "INR": { "amount": 249, "display": "₹249" },
+      "USD": { "amount": 3,   "display": "$3"   },
+      "EUR": { "amount": 3,   "display": "€3"   },
+      "GBP": { "amount": 2,   "display": "£2"   },
+      "JPY": { "amount": 500, "display": "¥500" }
+    },
+    "price": [{ "currency": "USD", "amount": 3, "interval": "one-time", "display": "$3" }],
+    "ctaLabel": "Add Pack"
   },
-  "price": [{ "currency": "USD", "amount": 25, "interval": "month", "display": "$25" }],
-  "ctaLabel": "Add Pack",
-  "features": [{ "id": "runtime.pro", "status": "optional" }]
-}
+  {
+    "id": "compute.gpu.20h",
+    "slug": "compute-gpu-20h",
+    "name": "GPU Pack — 20 Hours",
+    "description": "For ML hobbyists and notebook-heavy Pro or Team users.",
+    "resource": "+20 GPU hours · valid 90 days",
+    "category": "Compute",
+    "order": 20,
+    "status": "active",
+    "visibility": "public",
+    "currency": "INR",
+    "prices": {
+      "INR": { "amount": 899,  "display": "₹899"  },
+      "USD": { "amount": 11,   "display": "$11"   },
+      "EUR": { "amount": 10,   "display": "€10"   },
+      "GBP": { "amount": 9,    "display": "£9"    },
+      "JPY": { "amount": 1600, "display": "¥1,600" }
+    },
+    "price": [{ "currency": "USD", "amount": 11, "interval": "one-time", "display": "$11" }],
+    "ctaLabel": "Add Pack"
+  },
+  {
+    "id": "compute.gpu.100h",
+    "slug": "compute-gpu-100h",
+    "name": "GPU Pack — 100 Hours",
+    "description": "For teams running regular model training workloads.",
+    "resource": "+100 GPU hours · valid 180 days",
+    "category": "Compute",
+    "order": 30,
+    "status": "active",
+    "visibility": "public",
+    "currency": "INR",
+    "prices": {
+      "INR": { "amount": 3999, "display": "₹3,999" },
+      "USD": { "amount": 48,   "display": "$48"    },
+      "EUR": { "amount": 44,   "display": "€44"    },
+      "GBP": { "amount": 39,   "display": "£39"    },
+      "JPY": { "amount": 7200, "display": "¥7,200" }
+    },
+    "price": [{ "currency": "USD", "amount": 48, "interval": "one-time", "display": "$48" }],
+    "ctaLabel": "Add Pack"
+  },
+  {
+    "id": "compute.cpu.100h",
+    "slug": "compute-cpu-100h",
+    "name": "CPU Pack — 100 Hours",
+    "description": "For users needing extra compute beyond plan limits.",
+    "resource": "+100 CPU hours · valid 60 days",
+    "category": "Compute",
+    "order": 40,
+    "status": "active",
+    "visibility": "public",
+    "currency": "INR",
+    "prices": {
+      "INR": { "amount": 199, "display": "₹199" },
+      "USD": { "amount": 3,   "display": "$3"   },
+      "EUR": { "amount": 2,   "display": "€2"   },
+      "GBP": { "amount": 2,   "display": "£2"   },
+      "JPY": { "amount": 400, "display": "¥400" }
+    },
+    "price": [{ "currency": "USD", "amount": 3, "interval": "one-time", "display": "$3" }],
+    "ctaLabel": "Add Pack"
+  },
+  {
+    "id": "compute.notebook.gpu.10h",
+    "slug": "compute-notebook-gpu-10h",
+    "name": "Notebook GPU — 10 Hours",
+    "description": "For data science students and ML coursework.",
+    "resource": "+10 notebook GPU hours · valid 90 days",
+    "category": "Compute",
+    "order": 50,
+    "status": "active",
+    "visibility": "public",
+    "currency": "INR",
+    "prices": {
+      "INR": { "amount": 299, "display": "₹299" },
+      "USD": { "amount": 4,   "display": "$4"   },
+      "EUR": { "amount": 3,   "display": "€3"   },
+      "GBP": { "amount": 3,   "display": "£3"   },
+      "JPY": { "amount": 600, "display": "¥600" }
+    },
+    "price": [{ "currency": "USD", "amount": 4, "interval": "one-time", "display": "$4" }],
+    "ctaLabel": "Add Pack"
+  },
+  {
+    "id": "compute.notebook.gpu.50h",
+    "slug": "compute-notebook-gpu-50h",
+    "name": "Notebook GPU — 50 Hours",
+    "description": "For research teams running notebook-heavy experiments.",
+    "resource": "+50 notebook GPU hours · valid 180 days",
+    "category": "Compute",
+    "order": 60,
+    "status": "active",
+    "visibility": "public",
+    "currency": "INR",
+    "prices": {
+      "INR": { "amount": 1199, "display": "₹1,199" },
+      "USD": { "amount": 14,   "display": "$14"    },
+      "EUR": { "amount": 13,   "display": "€13"    },
+      "GBP": { "amount": 11,   "display": "£11"    },
+      "JPY": { "amount": 2100, "display": "¥2,100" }
+    },
+    "price": [{ "currency": "USD", "amount": 14, "interval": "one-time", "display": "$14" }],
+    "ctaLabel": "Add Pack"
+  },
+  {
+    "id": "compute.workspace.2",
+    "slug": "compute-workspace-2",
+    "name": "Workspace Slots +2",
+    "description": "For multi-project freelancers and context-switchers.",
+    "resource": "+2 simultaneous workspaces · permanent",
+    "category": "Compute",
+    "order": 70,
+    "status": "active",
+    "visibility": "public",
+    "currency": "INR",
+    "prices": {
+      "INR": { "amount": 129, "display": "₹129" },
+      "USD": { "amount": 2,   "display": "$2"   },
+      "EUR": { "amount": 2,   "display": "€2"   },
+      "GBP": { "amount": 1,   "display": "£1"   },
+      "JPY": { "amount": 300, "display": "¥300" }
+    },
+    "price": [{ "currency": "USD", "amount": 2, "interval": "one-time", "display": "$2" }],
+    "ctaLabel": "Add Pack"
+  },
+  {
+    "id": "compute.workspace.5",
+    "slug": "compute-workspace-5",
+    "name": "Workspace Slots +5",
+    "description": "For teams juggling many parallel microservices.",
+    "resource": "+5 simultaneous workspaces · permanent",
+    "category": "Compute",
+    "order": 80,
+    "status": "active",
+    "visibility": "public",
+    "currency": "INR",
+    "prices": {
+      "INR": { "amount": 349, "display": "₹349" },
+      "USD": { "amount": 4,   "display": "$4"   },
+      "EUR": { "amount": 4,   "display": "€4"   },
+      "GBP": { "amount": 3,   "display": "£3"   },
+      "JPY": { "amount": 700, "display": "¥700" }
+    },
+    "price": [{ "currency": "USD", "amount": 4, "interval": "one-time", "display": "$4" }],
+    "ctaLabel": "Add Pack"
+  }
+]

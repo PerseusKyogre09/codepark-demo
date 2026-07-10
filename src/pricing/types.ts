@@ -34,6 +34,8 @@ export interface PricingFeature {
 export interface PricingFeatureRef {
   id: string;
   label?: string;
+  /** true = ✓, false = —, string = custom note shown in the table cell */
+  value?: boolean | string;
   status?: 'included' | 'limited' | 'optional' | 'excluded';
   note?: string;
 }
@@ -45,6 +47,16 @@ export interface PricingProduct {
   name: string;
   description: string;
   summary?: string;
+  /** For packs: the category this pack belongs to (e.g. 'AI', 'Compute') */
+  category?: string;
+  /** For packs: human-readable resource added (e.g. '+10,000 AI credits · 90 days') */
+  resource?: string;
+  /**
+   * Card-specific differentiating bullet points shown on the pricing card.
+   * If present, these replace the auto-generated feature list.
+   * Keep to 5–7 items per plan, focusing on what makes this tier unique.
+   */
+  highlights?: string[];
   order: number;
   status: ProductStatus;
   visibility: ProductVisibility;

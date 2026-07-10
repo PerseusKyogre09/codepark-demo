@@ -2,7 +2,7 @@
   "id": "free",
   "slug": "free",
   "name": "Free",
-  "description": "For solo developers and open source projects.",
+  "description": "Best for students, hobbyists, and open source side projects.",
   "summary": "A lightweight starting point for trying CodePark with real-time collaboration and shared environments.",
   "order": 1,
   "status": "active",
@@ -10,30 +10,179 @@
   "featured": false,
   "currency": "INR",
   "prices": {
-    "INR": { "amount": 0, "display": "Free" },
-    "USD": { "amount": 0, "display": "Free" }
+    "INR": {
+      "amount": 0,
+      "display": "Free"
+    },
+    "USD": {
+      "amount": 0,
+      "display": "Free"
+    },
+    "EUR": {
+      "amount": 0,
+      "display": "Free"
+    },
+    "GBP": {
+      "amount": 0,
+      "display": "Free"
+    },
+    "JPY": {
+      "amount": 0,
+      "display": "Free"
+    }
   },
   "billing": {
     "monthly": {
-      "INR": { "amount": 0, "display": "Free" },
-      "USD": { "amount": 0, "display": "Free" }
+      "INR": {
+        "amount": 0,
+        "display": "Free"
+      },
+      "USD": {
+        "amount": 0,
+        "display": "Free"
+      },
+      "EUR": {
+        "amount": 0,
+        "display": "Free"
+      },
+      "GBP": {
+        "amount": 0,
+        "display": "Free"
+      },
+      "JPY": {
+        "amount": 0,
+        "display": "Free"
+      }
     },
     "yearly": {
-      "INR": { "amount": 0, "display": "Free" },
-      "USD": { "amount": 0, "display": "Free" }
+      "INR": {
+        "amount": 0,
+        "display": "Free"
+      },
+      "USD": {
+        "amount": 0,
+        "display": "Free"
+      },
+      "EUR": {
+        "amount": 0,
+        "display": "Free"
+      },
+      "GBP": {
+        "amount": 0,
+        "display": "Free"
+      },
+      "JPY": {
+        "amount": 0,
+        "display": "Free"
+      }
     }
   },
   "price": [
-    { "currency": "USD", "amount": 0, "interval": "month", "display": "Free" }
+    {
+      "currency": "USD",
+      "amount": 0,
+      "interval": "month",
+      "display": "Free"
+    }
   ],
   "ctaLabel": "Start Free",
+  "highlights": [
+    "3 private projects",
+    "2 concurrent workspaces · 2 vCPU / 2 GB RAM",
+    "1,000 AI credits / day · base models only",
+    "5 GB storage · 20 GB bandwidth / mo",
+    "Up to 10 collaborators",
+    "Community support (Discord)"
+  ],
   "features": [
-    { "id": "projects.unlimited", "status": "included" },
-    { "id": "runtime.standard", "status": "included" },
-    { "id": "ai.basic", "status": "included" },
-    { "id": "support.community", "status": "included" },
-    { "id": "team.collaborators.10", "status": "included" },
-    { "id": "environments.community", "status": "included" }
+    {
+      "id": "projects.private",
+      "value": "3 projects"
+    },
+    {
+      "id": "projects.public",
+      "value": true
+    },
+    {
+      "id": "collaboration.realtime",
+      "value": true
+    },
+    {
+      "id": "environments.community",
+      "value": true
+    },
+    {
+      "id": "environments.private",
+      "value": false
+    },
+    {
+      "id": "runtime.standard",
+      "value": true
+    },
+    {
+      "id": "runtime.pro",
+      "value": false
+    },
+    {
+      "id": "storage",
+      "value": "5 GB"
+    },
+    {
+      "id": "ai.credits",
+      "value": "1 k / day"
+    },
+    {
+      "id": "ai.models",
+      "value": "Base models"
+    },
+    {
+      "id": "ai.basic",
+      "value": true
+    },
+    {
+      "id": "ai.high",
+      "value": false
+    },
+    {
+      "id": "contextbase.basic",
+      "value": true
+    },
+    {
+      "id": "contextbase.advanced",
+      "value": false
+    },
+    {
+      "id": "deployments.bandwidth",
+      "value": "20 GB / mo"
+    },
+    {
+      "id": "deployments.custom_domain",
+      "value": false
+    },
+    {
+      "id": "deployments.blueprint",
+      "value": true
+    },
+    {
+      "id": "snapshots",
+      "value": "3"
+    },
+    {
+      "id": "team.orgs",
+      "value": false
+    },
+    {
+      "id": "team.collaborators",
+      "value": "Up to 10"
+    },
+    {
+      "id": "support.community",
+      "value": true
+    },
+    {
+      "id": "support.priority",
+      "value": false
+    }
   ],
   "comparison": {
     "projects": "3 active projects",

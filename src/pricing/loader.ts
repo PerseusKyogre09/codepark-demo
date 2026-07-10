@@ -97,12 +97,26 @@ function normalizeProduct(kind: PricingProduct['kind'], filePath: string, value:
     : undefined;
 
   const features = Array.isArray(value.features)
-    ? value.features.filter(isRecord).map((item) => ({
-        id: toString(item.id, ''),
-        label: toString(item.label),
-        status: item.status as PricingFeatureRef['status'] | undefined,
-        note: toString(item.note),
-      })).filter((item) => item.id.length > 0)
+    ? value.features.filter(isRecord).map((item) => {
+        // Resolve `value`: explicit boolean/string > derive from status > undefined
+        let resolvedValue: boolean | string | undefined;
+        if (typeof item.value === 'boolean') {
+          resolvedValue = item.value;
+        } else if (typeof item.value === 'string' && item.value.length > 0) {
+          resolvedValue = item.value;
+        } else if (item.status === 'included') {
+          resolvedValue = true;
+        } else if (item.status === 'excluded') {
+          resolvedValue = false;
+        }
+        return {
+          id: toString(item.id, ''),
+          label: toString(item.label),
+          value: resolvedValue,
+          status: item.status as PricingFeatureRef['status'] | undefined,
+          note: toString(item.note),
+        };
+      }).filter((item) => item.id.length > 0)
     : [];
 
     return {
@@ -112,6 +126,8 @@ function normalizeProduct(kind: PricingProduct['kind'], filePath: string, value:
     name: toString(value.name, toString(value.id, filePath)),
     description: toString(value.description, ''),
     summary: toString(value.summary),
+    category: toString(value.category),
+    resource: toString(value.resource),
     order: toNumber(value.order, 999),
     status: (toString(value.status, 'active') as PricingProduct['status']),
     visibility: (toString(value.visibility, 'public') as PricingProduct['visibility']),
@@ -122,6 +138,9 @@ function normalizeProduct(kind: PricingProduct['kind'], filePath: string, value:
     prices,
     billing,
     ctaLabel: toString(value.ctaLabel, 'Learn more'),
+    highlights: Array.isArray(value.highlights)
+      ? value.highlights.filter((h): h is string => typeof h === 'string')
+      : undefined,
     features,
     comparison: isRecord(value.comparison)
       ? Object.fromEntries(Object.entries(value.comparison).map(([key, entry]) => [key, String(entry)]))
@@ -147,9 +166,13 @@ export function loadPricingCatalog(): PricingCatalog {
   const features: PricingFeature[] = [];
 
   for (const [filePath, value] of Object.entries(productModules)) {
-    if (filePath.includes('/features/')) {
-      const feature = normalizeFeature(filePath, value);
-      if (feature) features.push(feature);
+    if (filePath.includes('/features/') || filePath.includes('/catalog/')) {
+      // catalog/features.json is an array; /features/*.json are individual objects
+      const raw = Array.isArray(value) ? value : [value];
+      for (const item of raw) {
+        const feature = normalizeFeature(filePath, item);
+        if (feature) features.push(feature);
+      }
       continue;
     }
 
@@ -166,8 +189,12 @@ export function loadPricingCatalog(): PricingCatalog {
     }
 
     if (filePath.includes('/packs/')) {
-      const item = normalizeProduct('pack', filePath, value);
-      if (item && item.visibility === 'public' && item.status !== 'hidden') packs.push(item);
+      // Pack files may be a single product or an array of variants
+      const raw = Array.isArray(value) ? value : [value];
+      for (const item of raw) {
+        const product = normalizeProduct('pack', filePath, item);
+        if (product && product.visibility === 'public' && product.status !== 'hidden') packs.push(product);
+      }
     }
   }
 

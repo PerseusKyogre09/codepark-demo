@@ -2,7 +2,7 @@
   "id": "enterprise",
   "slug": "enterprise",
   "name": "Enterprise",
-  "description": "For organizations with security, procurement, and scale requirements.",
+  "description": "Best for companies and agencies with security, compliance, and procurement requirements.",
   "summary": "Custom pricing, account controls, and enterprise deployment options.",
   "order": 4,
   "status": "active",
@@ -10,30 +10,180 @@
   "featured": false,
   "currency": "INR",
   "prices": {
-    "INR": { "amount": "Contact sales", "display": "Contact Sales" },
-    "USD": { "amount": "Contact sales", "display": "Contact Sales" }
+    "INR": {
+      "amount": "Contact sales",
+      "display": "Contact Sales"
+    },
+    "USD": {
+      "amount": "Contact sales",
+      "display": "Contact Sales"
+    },
+    "EUR": {
+      "amount": "Contact sales",
+      "display": "Contact Sales"
+    },
+    "GBP": {
+      "amount": "Contact sales",
+      "display": "Contact Sales"
+    },
+    "JPY": {
+      "amount": "Contact sales",
+      "display": "Contact Sales"
+    }
   },
   "billing": {
     "monthly": {
-      "INR": { "amount": "Contact sales", "display": "Contact Sales" },
-      "USD": { "amount": "Contact sales", "display": "Contact Sales" }
+      "INR": {
+        "amount": "Contact sales",
+        "display": "Contact Sales"
+      },
+      "USD": {
+        "amount": "Contact sales",
+        "display": "Contact Sales"
+      },
+      "EUR": {
+        "amount": "Contact sales",
+        "display": "Contact Sales"
+      },
+      "GBP": {
+        "amount": "Contact sales",
+        "display": "Contact Sales"
+      },
+      "JPY": {
+        "amount": "Contact sales",
+        "display": "Contact Sales"
+      }
     },
     "yearly": {
-      "INR": { "amount": "Contact sales", "display": "Contact Sales" },
-      "USD": { "amount": "Contact sales", "display": "Contact Sales" }
+      "INR": {
+        "amount": "Contact sales",
+        "display": "Contact Sales"
+      },
+      "USD": {
+        "amount": "Contact sales",
+        "display": "Contact Sales"
+      },
+      "EUR": {
+        "amount": "Contact sales",
+        "display": "Contact Sales"
+      },
+      "GBP": {
+        "amount": "Contact sales",
+        "display": "Contact Sales"
+      },
+      "JPY": {
+        "amount": "Contact sales",
+        "display": "Contact Sales"
+      }
     }
   },
   "price": [
-    { "currency": "USD", "amount": 0, "interval": "month", "display": "Custom" }
+    {
+      "currency": "USD",
+      "amount": 0,
+      "interval": "month",
+      "display": "Custom"
+    }
   ],
   "ctaLabel": "Contact Sales",
+  "highlights": [
+    "Dedicated infrastructure · up to 32 vCPU / 128 GB RAM",
+    "Custom AI credit pool · private or self-hosted models",
+    "Org-wide ContextBase Knowledge Graph",
+    "Unlimited custom domains + SSO-verified DNS",
+    "Advanced RBAC, audit logs, SSO / SCIM provisioning",
+    "Multiple orgs · unlimited seats",
+    "Dedicated account manager · 24/7 SLA-backed support"
+  ],
   "features": [
-    { "id": "projects.unlimited", "status": "included" },
-    { "id": "runtime.pro", "status": "included" },
-    { "id": "ai.high", "status": "included" },
-    { "id": "support.priority", "status": "included" },
-    { "id": "team.collaborators.unlimited", "status": "included" },
-    { "id": "domains.custom", "status": "included" }
+    {
+      "id": "projects.private",
+      "value": "Unlimited"
+    },
+    {
+      "id": "projects.public",
+      "value": true
+    },
+    {
+      "id": "collaboration.realtime",
+      "value": true
+    },
+    {
+      "id": "environments.community",
+      "value": true
+    },
+    {
+      "id": "environments.private",
+      "value": true
+    },
+    {
+      "id": "runtime.standard",
+      "value": true
+    },
+    {
+      "id": "runtime.pro",
+      "value": true
+    },
+    {
+      "id": "storage",
+      "value": "500 GB + custom"
+    },
+    {
+      "id": "ai.credits",
+      "value": "Custom pool"
+    },
+    {
+      "id": "ai.models",
+      "value": "All + self-hosted"
+    },
+    {
+      "id": "ai.basic",
+      "value": true
+    },
+    {
+      "id": "ai.high",
+      "value": true
+    },
+    {
+      "id": "contextbase.basic",
+      "value": true
+    },
+    {
+      "id": "contextbase.advanced",
+      "value": "Org-wide graph"
+    },
+    {
+      "id": "deployments.bandwidth",
+      "value": "5 TB / mo"
+    },
+    {
+      "id": "deployments.custom_domain",
+      "value": "Unlimited + SSO DNS"
+    },
+    {
+      "id": "deployments.blueprint",
+      "value": "SLA-backed"
+    },
+    {
+      "id": "snapshots",
+      "value": "Custom retention"
+    },
+    {
+      "id": "team.orgs",
+      "value": "Multiple · unlimited seats"
+    },
+    {
+      "id": "team.collaborators",
+      "value": "Unlimited"
+    },
+    {
+      "id": "support.community",
+      "value": false
+    },
+    {
+      "id": "support.priority",
+      "value": "Dedicated · 24/7 SLA"
+    }
   ],
   "comparison": {
     "projects": "Unlimited",

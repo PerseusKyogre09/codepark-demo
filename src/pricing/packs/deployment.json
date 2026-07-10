@@ -1,19 +1,107 @@
-{
-  "id": "deployment",
-  "slug": "deployment",
-  "name": "Deployment Pack",
-  "description": "More room for deployment-heavy projects.",
-  "summary": "A simple add-on for teams shipping frequently.",
-  "order": 3,
-  "status": "active",
-  "visibility": "public",
-  "featured": false,
-  "currency": "INR",
-  "prices": {
-    "INR": { "amount": 2499, "display": "₹2,499" },
-    "USD": { "amount": 29, "display": "$29" }
+[
+  {
+    "id": "deployment.slots.large",
+    "slug": "deployment-slots-large",
+    "name": "Deployment Slots — Large",
+    "description": "For teams running several always-on services.",
+    "resource": "+20 deployment slots · valid 90 days",
+    "category": "Deployment",
+    "order": 10,
+    "status": "active",
+    "visibility": "public",
+    "currency": "INR",
+    "prices": {
+      "INR": { "amount": 599,  "display": "₹599"  },
+      "USD": { "amount": 7,    "display": "$7"    },
+      "EUR": { "amount": 7,    "display": "€7"    },
+      "GBP": { "amount": 6,    "display": "£6"    },
+      "JPY": { "amount": 1100, "display": "¥1,100" }
+    },
+    "price": [{ "currency": "USD", "amount": 7, "interval": "one-time", "display": "$7" }],
+    "ctaLabel": "Add Pack"
   },
-  "price": [{ "currency": "USD", "amount": 29, "interval": "month", "display": "$29" }],
-  "ctaLabel": "Add Pack",
-  "features": [{ "id": "domains.custom", "status": "optional" }]
-}
+  {
+    "id": "deployment.build.500",
+    "slug": "deployment-build-500",
+    "name": "Build Pack — 500 Mins",
+    "description": "For free or Pro users needing extra build capacity.",
+    "resource": "+500 build minutes · valid 60 days",
+    "category": "Deployment",
+    "order": 20,
+    "status": "active",
+    "visibility": "public",
+    "currency": "INR",
+    "prices": {
+      "INR": { "amount": 149, "display": "₹149" },
+      "USD": { "amount": 2,   "display": "$2"   },
+      "EUR": { "amount": 2,   "display": "€2"   },
+      "GBP": { "amount": 1,   "display": "£1"   },
+      "JPY": { "amount": 300, "display": "¥300" }
+    },
+    "price": [{ "currency": "USD", "amount": 2, "interval": "one-time", "display": "$2" }],
+    "ctaLabel": "Add Pack"
+  },
+  {
+    "id": "deployment.build.2000",
+    "slug": "deployment-build-2000",
+    "name": "Build Pack — 2,000 Mins",
+    "description": "For teams with frequent CI/CD pipelines.",
+    "resource": "+2,000 build minutes · valid 90 days",
+    "category": "Deployment",
+    "order": 30,
+    "status": "active",
+    "visibility": "public",
+    "currency": "INR",
+    "prices": {
+      "INR": { "amount": 499, "display": "₹499" },
+      "USD": { "amount": 6,   "display": "$6"   },
+      "EUR": { "amount": 6,   "display": "€6"   },
+      "GBP": { "amount": 5,   "display": "£5"   },
+      "JPY": { "amount": 900, "display": "¥900" }
+    },
+    "price": [{ "currency": "USD", "amount": 6, "interval": "one-time", "display": "$6" }],
+    "ctaLabel": "Add Pack"
+  },
+  {
+    "id": "deployment.bandwidth.250gb",
+    "slug": "deployment-bandwidth-250gb",
+    "name": "Bandwidth — 250 GB",
+    "description": "For growing SaaS products on Pro or Team plans.",
+    "resource": "+250 GB deployment bandwidth · valid 90 days",
+    "category": "Deployment",
+    "order": 40,
+    "status": "active",
+    "visibility": "public",
+    "currency": "INR",
+    "prices": {
+      "INR": { "amount": 399, "display": "₹399" },
+      "USD": { "amount": 5,   "display": "$5"   },
+      "EUR": { "amount": 4,   "display": "€4"   },
+      "GBP": { "amount": 4,   "display": "£4"   },
+      "JPY": { "amount": 700, "display": "¥700" }
+    },
+    "price": [{ "currency": "USD", "amount": 5, "interval": "one-time", "display": "$5" }],
+    "ctaLabel": "Add Pack"
+  },
+  {
+    "id": "deployment.bandwidth.1tb",
+    "slug": "deployment-bandwidth-1tb",
+    "name": "Bandwidth — 1 TB",
+    "description": "For enterprise-grade production deployments.",
+    "resource": "+1 TB deployment bandwidth · valid 180 days",
+    "category": "Deployment",
+    "order": 50,
+    "status": "active",
+    "visibility": "public",
+    "currency": "INR",
+    "prices": {
+      "INR": { "amount": 1299, "display": "₹1,299" },
+      "USD": { "amount": 16,   "display": "$16"    },
+      "EUR": { "amount": 14,   "display": "€14"    },
+      "GBP": { "amount": 13,   "display": "£13"    },
+      "JPY": { "amount": 2300, "display": "¥2,300" }
+    },
+    "price": [{ "currency": "USD", "amount": 16, "interval": "one-time", "display": "$16" }],
+    "ctaLabel": "Add Pack"
+  }
+]

@@ -10,10 +10,40 @@
   "featured": false,
   "currency": "INR",
   "prices": {
-    "INR": { "amount": 399, "display": "₹399" },
-    "USD": { "amount": 5, "display": "$5" }
+    "INR": {
+      "amount": 199,
+      "display": "₹199"
+    },
+    "USD": {
+      "amount": 5,
+      "display": "$5"
+    },
+    "EUR": {
+      "amount": 5,
+      "display": "€5"
+    },
+    "GBP": {
+      "amount": 4,
+      "display": "£4"
+    },
+    "JPY": {
+      "amount": 700,
+      "display": "¥700"
+    }
   },
-  "price": [{ "currency": "USD", "amount": 5, "interval": "one-time", "display": "$5" }],
+  "price": [
+    {
+      "currency": "USD",
+      "amount": 5,
+      "interval": "one-time",
+      "display": "$5"
+    }
+  ],
   "ctaLabel": "Use Pass",
-  "features": [{ "id": "runtime.standard", "status": "included" }]
+  "features": [
+    {
+      "id": "runtime.standard",
+      "status": "included"
+    }
+  ]
 }

@@ -2,7 +2,7 @@
   "id": "pro",
   "slug": "pro",
   "name": "Pro",
-  "description": "For serious developers who need more power and control.",
+  "description": "Best for freelancers and indie developers who need more than the free tier.",
   "summary": "Higher execution limits, stronger AI access, and more customization for daily work.",
   "order": 2,
   "status": "active",
@@ -11,30 +11,196 @@
   "badge": "Most popular",
   "currency": "INR",
   "prices": {
-    "INR": { "amount": 1499, "display": "₹1,499", "note": "per person / month" },
-    "USD": { "amount": 18, "display": "$18", "note": "per person / month" }
+    "INR": {
+      "amount": 499,
+      "display": "₹499",
+      "note": "per person / month"
+    },
+    "USD": {
+      "amount": 18,
+      "display": "$18",
+      "note": "per person / month"
+    },
+    "EUR": {
+      "amount": 17,
+      "display": "€17",
+      "note": "per person / month"
+    },
+    "GBP": {
+      "amount": 15,
+      "display": "£15",
+      "note": "per person / month"
+    },
+    "JPY": {
+      "amount": 2700,
+      "display": "¥2,700",
+      "note": "per person / month"
+    }
   },
   "billing": {
     "monthly": {
-      "INR": { "amount": 1499, "display": "₹1,499", "note": "per person / month" },
-      "USD": { "amount": 18, "display": "$18", "note": "per person / month" }
+      "INR": {
+        "amount": 499,
+        "display": "₹499",
+        "note": "per person / month"
+      },
+      "USD": {
+        "amount": 18,
+        "display": "$18",
+        "note": "per person / month"
+      },
+      "EUR": {
+        "amount": 17,
+        "display": "€17",
+        "note": "per person / month"
+      },
+      "GBP": {
+        "amount": 15,
+        "display": "£15",
+        "note": "per person / month"
+      },
+      "JPY": {
+        "amount": 2700,
+        "display": "¥2,700",
+        "note": "per person / month"
+      }
     },
     "yearly": {
-      "INR": { "amount": 14990, "display": "₹14,990", "note": "per person / year · save 17%" },
-      "USD": { "amount": 180, "display": "$180", "note": "per person / year · save 17%" }
+      "INR": {
+        "amount": 4790,
+        "display": "₹4,790  ",
+        "note": "per person / year · save 17%"
+      },
+      "USD": {
+        "amount": 180,
+        "display": "$180",
+        "note": "per person / year · save 17%"
+      },
+      "EUR": {
+        "amount": 170,
+        "display": "€170",
+        "note": "per person / year · save 17%"
+      },
+      "GBP": {
+        "amount": 150,
+        "display": "£150",
+        "note": "per person / year · save 17%"
+      },
+      "JPY": {
+        "amount": 27000,
+        "display": "¥27,000",
+        "note": "per person / year · save 17%"
+      }
     }
   },
   "price": [
-    { "currency": "USD", "amount": 18, "interval": "month", "display": "$18", "note": "per person" }
+    {
+      "currency": "USD",
+      "amount": 18,
+      "interval": "month",
+      "display": "$18",
+      "note": "per person"
+    }
   ],
   "ctaLabel": "Start a Team",
+  "highlights": [
+    "20 private projects · 5 concurrent workspaces",
+    "4 vCPU / 8 GB RAM per workspace",
+    "20,000 AI credits / mo + 5k rollover",
+    "Advanced AI models (GPT / Claude class)",
+    "ContextBase: Workspace Graph + Dependency Graph",
+    "1 custom domain · 100 GB bandwidth / mo",
+    "Email support · 48h response"
+  ],
   "features": [
-    { "id": "projects.unlimited", "status": "included" },
-    { "id": "runtime.pro", "status": "included" },
-    { "id": "ai.high", "status": "included" },
-    { "id": "support.priority", "status": "included" },
-    { "id": "domains.custom", "status": "included" },
-    { "id": "team.collaborators.unlimited", "status": "included" }
+    {
+      "id": "projects.private",
+      "value": "20 projects"
+    },
+    {
+      "id": "projects.public",
+      "value": true
+    },
+    {
+      "id": "collaboration.realtime",
+      "value": true
+    },
+    {
+      "id": "environments.community",
+      "value": true
+    },
+    {
+      "id": "environments.private",
+      "value": true
+    },
+    {
+      "id": "runtime.standard",
+      "value": true
+    },
+    {
+      "id": "runtime.pro",
+      "value": true
+    },
+    {
+      "id": "storage",
+      "value": "25 GB"
+    },
+    {
+      "id": "ai.credits",
+      "value": "20 k / mo"
+    },
+    {
+      "id": "ai.models",
+      "value": "Advanced models"
+    },
+    {
+      "id": "ai.basic",
+      "value": true
+    },
+    {
+      "id": "ai.high",
+      "value": true
+    },
+    {
+      "id": "contextbase.basic",
+      "value": true
+    },
+    {
+      "id": "contextbase.advanced",
+      "value": true
+    },
+    {
+      "id": "deployments.bandwidth",
+      "value": "100 GB / mo"
+    },
+    {
+      "id": "deployments.custom_domain",
+      "value": "1 domain"
+    },
+    {
+      "id": "deployments.blueprint",
+      "value": true
+    },
+    {
+      "id": "snapshots",
+      "value": "20"
+    },
+    {
+      "id": "team.orgs",
+      "value": false
+    },
+    {
+      "id": "team.collaborators",
+      "value": "Unlimited"
+    },
+    {
+      "id": "support.community",
+      "value": false
+    },
+    {
+      "id": "support.priority",
+      "value": "Email · 48 h"
+    }
   ],
   "comparison": {
     "projects": "Unlimited",
