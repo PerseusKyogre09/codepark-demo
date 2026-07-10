@@ -45,15 +45,26 @@ const TESTIMONIALS = [
   },
 ];
 
-const PRICING = pricingCatalog.plans.map((plan) => ({
-  name: plan.name,
-  price: plan.price[0]?.display ?? `${plan.price[0]?.amount ?? "Custom"}`,
-  period: plan.price[0]?.note ? ` ${plan.price[0].note}` : plan.price[0]?.interval === "month" ? "/month" : "",
-  description: plan.description,
-  features: plan.features.map((feature) => feature.label ?? feature.id),
-  cta: plan.ctaLabel,
-  highlighted: Boolean(plan.featured),
-}));
+const PRICING = pricingCatalog.plans.map((plan) => {
+  const currencyPrice = plan.prices?.["INR"] || plan.prices?.["USD"] || plan.price[0];
+  const priceDisplay = currencyPrice?.display ?? `${currencyPrice?.amount ?? "Custom"}`;
+  const period = currencyPrice?.note ? ` ${currencyPrice.note}` : "";
+
+  return {
+    name: plan.name,
+    price: priceDisplay,
+    period,
+    description: plan.description,
+    features: (plan.highlights && plan.highlights.length > 0)
+      ? plan.highlights.slice(0, 7)
+      : plan.features
+          .filter((f) => f.value !== false)
+          .map((feature) => feature.label || pricingCatalog.features.find((f) => f.id === feature.id)?.label || feature.id)
+          .slice(0, 7),
+    cta: plan.ctaLabel,
+    highlighted: Boolean(plan.featured),
+  };
+});
 
 const FAQS = [
   { q: "How is CodePark different from GitHub Codespaces?", a: "CodePark is built around collaboration, not just cloud development. Pair programming, presence indicators, shared terminals, and ContextBase are first-class features — not add-ons. The editor is the workshop; the rest of CodePark is the park." },
@@ -435,9 +446,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Pricing */}
       <section className="border-t border-border" id="pricing">
-        <div className="max-w-5xl mx-auto px-4 md:px-6 py-14 md:py-20">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-14 md:py-20">
           <div className="text-center mb-10 md:mb-14">
             <h2
               className="text-3xl font-semibold text-foreground mb-3"
@@ -447,7 +457,7 @@ export default function HomePage() {
             </h2>
             <p className="text-muted-foreground">Start free. Grow with your team.</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {PRICING.map((plan) => (
               <div
                 key={plan.name}

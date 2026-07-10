@@ -175,7 +175,7 @@ export function GitPanel({ onStatusUpdate }: GitPanelProps) {
         await fetchCommitHistory();
         alert(`✅ Fetched from "${remote}" successfully!`);
       } else {
-        setError(result.message || null);
+        setError(result.message);
       }
     } catch (err) {
       setError('Failed to fetch from remote');
@@ -194,7 +194,7 @@ export function GitPanel({ onStatusUpdate }: GitPanelProps) {
         await fetchRemotes();
         await fetchGitStatus();
       } else {
-        setError(result.message || null);
+        setError(result.message);
       }
     } catch (err) {
       setError('Failed to add remote');
@@ -209,7 +209,7 @@ export function GitPanel({ onStatusUpdate }: GitPanelProps) {
         await fetchRemotes();
         await fetchGitStatus();
       } else {
-        setError(result.message || null);
+        setError(result.message);
       }
     } catch (err) {
       setError('Failed to remove remote');
@@ -225,7 +225,7 @@ export function GitPanel({ onStatusUpdate }: GitPanelProps) {
         await fetchGitStatus();
         await fetchCommitHistory();
       } else {
-        setError(result.message || null);
+        setError(result.message);
       }
     } catch (err) {
       setError('Failed to push');
@@ -472,7 +472,7 @@ export function GitPanel({ onStatusUpdate }: GitPanelProps) {
         // Refresh session to get updated files
         refreshSession();
       } else {
-        setError(result.message || null);
+        setError(result.message);
       }
     } catch (err) {
       setError('Failed to pull');
@@ -490,7 +490,7 @@ export function GitPanel({ onStatusUpdate }: GitPanelProps) {
         setRemoteStatus(prev => ({ ...prev, [remote]: true }));
       } else {
         setRemoteStatus(prev => ({ ...prev, [remote]: false }));
-        setError(result.message || null);
+        setError(result.message);
       }
     } catch (err) {
       setRemoteStatus(prev => ({ ...prev, [remote]: false }));

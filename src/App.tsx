@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import { Suspense, lazy, useEffect } from 'react'
 import { Toaster } from 'sonner'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -40,7 +40,6 @@ const DocsPage = lazy(() => import('./pages/DocsPage'))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 const UsernameSetupPage = lazy(() => import('./pages/UsernameSetupPage'))
 const AuthPage = lazy(() => import('./pages/AuthPage'))
-const ProPage = lazy(() => import('./pages/ProPage'))
 const PricingPage = lazy(() => import('./pages/PricingPage'))
 const ThemeTestPage = lazy(() => import('./pages/ThemeTestPage'))
 const SocketTestPage = lazy(() => import('./pages/SocketTestPage'))
@@ -143,8 +142,8 @@ function App() {
                       <Route path="/" element={<HomePage />} />
                       <Route path="/faq" element={<FAQPage />} />
                       <Route path="/about" element={<AboutPage />} />
-                      <Route path="/pro" element={<ProPage />} />
                       <Route path="/pricing" element={<PricingPage />} />
+                      <Route path="/pro" element={<Navigate to="/pricing" replace />} />
                       <Route path="/stripe" element={<StripePage />} />
                       <Route path="/docs/*" element={<DocsPage />} />
                       <Route path="/changelog/*" element={<ReleaseNotesPage />} />

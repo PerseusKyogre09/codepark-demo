@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
-import { 
+import {
   Plus, Play, FolderPlus, Link2, ArrowRight, UserPlus, ExternalLink, 
-  MoreVertical, Clock, Trash2, Edit2, Info, Check, AlertCircle, FileCode
+  MoreVertical, Clock, Trash2, Edit2, FileCode
 } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";

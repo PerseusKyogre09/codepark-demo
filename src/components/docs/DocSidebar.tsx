@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ChevronDown, ChevronRight, BookOpen } from 'lucide-react';
 import { getRegistry } from '../../lib/docs/registry';

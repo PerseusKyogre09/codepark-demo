@@ -85,8 +85,61 @@ export default function FriendsPage() {
         localStorage.setItem("cached_friends", JSON.stringify(friendsList));
         localStorage.setItem("cached_pending_requests", JSON.stringify(requests.incoming || []));
         setLoading(false);
+
+        // Setup real-time listeners for each friend
+        const { getFirestore, doc, onSnapshot } = await import("firebase/firestore");
+        const { getApp } = await import("firebase/app");
+        const db = getFirestore(getApp());
+
+        const unsubs = friendsList.map((friend) => {
+          return onSnapshot(doc(db, "users", friend.uid), (docSnap) => {
+            if (docSnap.exists() && active) {
+              const data = docSnap.data();
+              setFriends((prevFriends) =>
+                prevFriends.map((f) => {
+                  if (f.uid === friend.uid) {
+                    const privacy = data.privacy_settings || {};
+                    const presenceVis = privacy.presence_visibility || "everyone";
+                    const activityVis = privacy.activity_visibility !== false;
+                    const lastSeenVis = privacy.last_seen_visibility || "everyone";
+
+                    const showPresence = presenceVis !== "nobody";
+                    const showActivity = showPresence && activityVis;
+                    const showLastSeen = lastSeenVis !== "nobody";
+
+                    const rawPresence = data.presence || {};
+                    const rawState = rawPresence.state || data.mode || "offline";
+                    const rawLastSeen = rawPresence.lastSeenAt || data.updated_at;
+
+                    // Stale check (150 seconds)
+                    const isStale = rawLastSeen && (Date.now() / 1000 - rawLastSeen > 150);
+                    const state = (rawState !== "offline" && isStale) ? "offline" : rawState;
+
+                    return {
+                      ...f,
+                      name: data.name || data.username || f.name,
+                      picture: data.picture || f.picture,
+                      color: data.color || f.color,
+                      mode: showPresence ? state : "offline",
+                      status_text: (showPresence && showActivity) ? rawPresence.activePage : "",
+                      presence: {
+                        state: showPresence ? state : "offline",
+                        lastSeenAt: showLastSeen ? rawLastSeen : null,
+                        activePage: (showPresence && showActivity) ? rawPresence.activePage : "",
+                        activeProjectId: (showPresence && showActivity) ? rawPresence.activeProjectId : null,
+                        activeProjectName: (showPresence && showActivity) ? rawPresence.activeProjectName : null,
+                      }
+                    };
+                  }
+                  return f;
+                })
+              );
+            }
+          });
+        });
+        unsubscribes = unsubs;
       } catch (err) {
-        console.error("Failed to load social data", err);
+        console.error("Failed to setup real-time presence in FriendsPage", err);
         if (active) setLoading(false);
       }
     };

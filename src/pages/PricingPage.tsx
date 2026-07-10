@@ -114,7 +114,7 @@ export default function PricingPage() {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const [isYearly, setIsYearly] = useState(true);
-  const [currency, setCurrency] = useState<Currency>("USD");
+  const [currency, setCurrency] = useState<Currency>("INR");
   const [showCurrencyMenu, setShowCurrencyMenu] = useState(false);
   const curr = CURRENCIES.find((c) => c.code === currency)!;
 
