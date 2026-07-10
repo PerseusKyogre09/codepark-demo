@@ -1,12 +1,12 @@
 import { useEffect, useState, useRef } from "react";
-import { 
-  Plus, Play, FolderPlus, Link2, ArrowRight, UserPlus, ExternalLink, 
-  MoreVertical, Clock, Trash2, Edit2, Info, Check, AlertCircle, FileCode
+import {
+  Plus, Play, FolderPlus, ArrowRight, Clock, FileCode,
+  GitBranch, X, Globe, Terminal, Database, HardDrive,
+  Rocket, CreditCard, Zap, CheckCircle2, ShoppingBag, GitFork
 } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useProjects } from "../hooks/useProjects";
-import { ProjectCard } from "../components/cp/ProjectCard";
 import { Avatar } from "../components/cp/Avatar";
 import { apiClient } from "../services/api";
 import RepositorySelectModal from "../components/RepositorySelectModal";
@@ -16,18 +16,263 @@ import { getNextMountId, startNewNavigation, traceCall } from "../utils/debugTra
 
 const RECENT_PROJECT_LIMIT = 6;
 
+// ─── Blueprint analytics (user's OWN published blueprint - mock data for now) ────
+const MY_BLUEPRINT = {
+  name: "FastAPI Starter",
+  emoji: "⚡",
+  color: "#CE422B",
+  desc: "Python async API with Redis caching and OpenAPI docs.",
+  publishedAt: "5 hours ago",
+  launches: 127,
+  forks: 18,
+  starsToday: 4,
+  trend: "+12%",
+  version: "v1.2.0",
+  verified: true,
+};
+
+// ─── Marketplace featured (3 items for dashboard preview) ─────────────────────
+const MARKETPLACE_FEATURED = [
+  {
+    id: "njs",
+    emoji: "⬡",
+    color: "#3178C6",
+    name: "Next.js Starter",
+    category: "Workspace Template",
+    badge: "Official",
+  },
+  {
+    id: "fp",
+    emoji: "⚡",
+    color: "#CE422B",
+    name: "FastAPI Blueprint",
+    category: "Blueprint",
+    badge: "Trending · 1.8k runs",
+  },
+  {
+    id: "theme",
+    emoji: "🎨",
+    color: "#9FD7A7",
+    name: "Dark Forest Theme",
+    category: "Theme",
+    badge: "Coming soon",
+  },
+];
+
+// ─── Welcome Back banner ──────────────────────────────────────────────────────
+interface WelcomeBackBannerProps {
+  onDismiss: () => void;
+  heroProject: any;
+  handleResume: (id: string) => void;
+}
+
+function WelcomeBackBanner({ onDismiss, heroProject, handleResume }: WelcomeBackBannerProps) {
+  const navigate = useNavigate();
+  return (
+    <div className="relative border border-primary/25 bg-primary/[0.06] rounded-2xl p-5 mb-6">
+      <button
+        onClick={onDismiss}
+        className="absolute top-4 right-4 text-muted-foreground hover:text-foreground transition-colors"
+      >
+        <X size={14} />
+      </button>
+      <div className="flex items-start gap-3.5 pr-6">
+        <div className="size-9 rounded-xl bg-primary/15 border border-primary/20 flex items-center justify-center shrink-0">
+          <Clock size={15} className="text-primary" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-semibold text-foreground mb-1">
+            Welcome back — you were away for a bit.
+          </p>
+          <p className="text-xs text-muted-foreground leading-relaxed mb-3">
+            Review active workspaces and resume your sessions. Check collaborator status and recent activities below.
+          </p>
+          <div className="flex items-center gap-2 flex-wrap">
+            {heroProject && (
+              <button
+                onClick={() => handleResume(heroProject.id)}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-primary-foreground text-xs font-medium rounded-lg hover:bg-primary/90 transition-colors"
+              >
+                <Play size={11} />
+                Resume — {heroProject.name}
+              </button>
+            )}
+            <button
+              onClick={() => navigate("/dashboard/projects")}
+              className="px-3 py-1.5 border border-border text-xs text-muted-foreground rounded-lg hover:text-foreground hover:bg-muted transition-colors"
+            >
+              See workspaces
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Active workspace card ────────────────────────────────────────────────────
+interface ActiveWorkspaceCardProps {
+  heroProject: any;
+  handleResume: (id: string) => void;
+  sortedFriends: any[];
+  isRunning: boolean;
+}
+
+function ActiveWorkspaceCard({ heroProject, handleResume, sortedFriends, isRunning }: ActiveWorkspaceCardProps) {
+  const onlineFriends = sortedFriends.filter((f) => {
+    const state = f.presence?.state || f.mode || "offline";
+    return state !== "offline";
+  });
+
+  return (
+    <div className="relative bg-surface border border-primary/20 rounded-2xl p-6 overflow-hidden">
+      {/* Ambient glow */}
+      {isRunning && (
+        <div className="absolute -top-20 -right-20 size-72 rounded-full bg-primary/6 blur-3xl pointer-events-none" />
+      )}
+
+      <div className="relative">
+        <div className="flex items-start justify-between gap-4 mb-5 flex-wrap md:flex-nowrap">
+          {/* Identity */}
+          <div className="flex items-start gap-4">
+            <div className="size-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+              <span className="text-primary font-bold text-xl" style={{ fontFamily: "var(--font-mono)" }}>
+                {heroProject.name ? heroProject.name[0].toUpperCase() : "P"}
+              </span>
+            </div>
+            <div>
+              <div className="flex items-center gap-2.5 mb-2 flex-wrap">
+                <h2 className="text-xl font-semibold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
+                  {heroProject.name}
+                </h2>
+                {isRunning ? (
+                  <span className="flex items-center gap-1.5 text-[10px] font-semibold text-success bg-success/10 border border-success/20 px-2 py-0.5 rounded-full">
+                    <span className="size-1.5 rounded-full bg-success animate-pulse" />
+                    Running
+                  </span>
+                ) : (
+                  <span className="flex items-center gap-1.5 text-[10px] font-semibold text-muted-foreground bg-muted border border-border px-2 py-0.5 rounded-full">
+                    <span className="size-1.5 rounded-full bg-muted-foreground/60" />
+                    Inactive
+                  </span>
+                )}
+              </div>
+              {/* Meta row */}
+              <div className="flex items-center gap-3 text-xs text-muted-foreground flex-wrap">
+                <span className="flex items-center gap-1">
+                  <GitBranch size={11} /> {heroProject.branch || "main"}
+                </span>
+                <span className="text-border">·</span>
+                <span className="flex items-center gap-1">
+                  <Clock size={11} /> Last active {new Date(heroProject.updated_at).toLocaleDateString()}
+                </span>
+                {onlineFriends.length > 0 && (
+                  <>
+                    <span className="text-border">·</span>
+                    <span className="flex items-center gap-1.5">
+                      <span className="flex -space-x-1.5">
+                        {onlineFriends.slice(0, 3).map((f) => (
+                          <div
+                            key={f.uid}
+                            title={f.name || f.username}
+                            className="size-4 rounded-full border border-surface flex items-center justify-center text-[7px] text-white font-semibold bg-primary"
+                          >
+                            {(f.name || f.username).substring(0, 2).toUpperCase()}
+                          </div>
+                        ))}
+                      </span>
+                      <span className="text-success text-[10px]">{onlineFriends.length} online</span>
+                    </span>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Primary CTA */}
+          <button
+            onClick={() => handleResume(heroProject.id)}
+            disabled={isRunning}
+            className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-xl hover:bg-primary/90 transition-colors shrink-0 disabled:opacity-75 disabled:cursor-not-allowed"
+          >
+            <Play size={14} className={isRunning ? "animate-spin" : ""} />
+            {isRunning ? "Starting..." : "Resume Workspace"}
+          </button>
+        </div>
+
+        {/* Resource bars + Services — two columns */}
+        {isRunning && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-5 border-t border-border/70">
+            {/* Resource allocation */}
+            <div className="space-y-3.5">
+              <p className="text-[9px] font-semibold text-muted-foreground/60 uppercase tracking-widest">
+                Workspace resources
+              </p>
+              <div>
+                <div className="flex items-center justify-between text-[10px] text-muted-foreground mb-1.5">
+                  <span>RAM · Starter (512 MB)</span>
+                  <span className="font-mono">388 MB / 512 MB</span>
+                </div>
+                <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                  <div className="h-full bg-primary/60 rounded-full transition-all" style={{ width: "76%" }} />
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center justify-between text-[10px] text-muted-foreground mb-1.5">
+                  <span>CPU · 1 vCPU</span>
+                  <span className="font-mono">34%</span>
+                </div>
+                <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                  <div className="h-full bg-info/50 rounded-full transition-all" style={{ width: "34%" }} />
+                </div>
+              </div>
+            </div>
+
+            {/* Running services */}
+            <div className="space-y-2.5">
+              <p className="text-[9px] font-semibold text-muted-foreground/60 uppercase tracking-widest">
+                Services
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="size-7 rounded-lg bg-success/10 flex items-center justify-center shrink-0">
+                  <Globe size={12} className="text-success" />
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-foreground">Preview live</p>
+                  <p className="text-[10px] text-muted-foreground font-mono">localhost:3000</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="size-7 rounded-lg bg-warning/10 flex items-center justify-center shrink-0">
+                  <Terminal size={12} className="text-warning" />
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-foreground">Terminal active</p>
+                  <p className="text-[10px] text-muted-foreground">1 session open</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── Main Component ──────────────────────────────────────────────────────────
+
 export default function DashboardPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { projects, listProjects, openProject, deleteProject } = useProjects();
+  const { projects, listProjects, openProject } = useProjects();
   const [friends, setFriends] = useState<any[]>([]);
   const [recentActivities, setRecentActivities] = useState<any[]>([]);
   const [isRepoSelectOpen, setIsRepoSelectOpen] = useState(false);
   const [isGitHubImportOpen, setIsGitHubImportOpen] = useState(false);
-  const [activeMenuProjectId, setActiveMenuProjectId] = useState<string | null>(null);
+  const [showWelcomeBack, setShowWelcomeBack] = useState(true);
+  const [runningWorkspaceId, setRunningWorkspaceId] = useState<string | null>(null);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const mountIdRef = useRef<number | null>(null);
   if (mountIdRef.current === null) {
@@ -56,7 +301,7 @@ export default function DashboardPage() {
     const mountCount = (window as any).__dashboardMountCount || 0;
     const currentCount = mountCount + 1;
     (window as any).__dashboardMountCount = currentCount;
-    
+
     console.log(
       `%c[MOUNT-TRACE] 📦 DashboardPage mounted.\n` +
       ` ├── Mount ID: ${mountId}\n` +
@@ -66,7 +311,7 @@ export default function DashboardPage() {
       ` └── Timestamp: ${new Date().toISOString()}`,
       'color: #10b981; font-weight: bold;'
     );
-    
+
     startNewNavigation(`DashboardPage Mount ID #${mountId}`);
 
     return () => {
@@ -126,50 +371,16 @@ export default function DashboardPage() {
     };
   }, [mountId]);
 
-  // Click outside to close hero context menu
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setActiveMenuProjectId(null);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
   const handleResume = async (projectId: string) => {
+    setRunningWorkspaceId(projectId);
     try {
       const sessionInfo = await openProject(projectId);
       if (sessionInfo) {
         navigate(`/project/${projectId}/editor?session=${encodeURIComponent(sessionInfo.session_id)}`);
       }
     } catch (err: any) {
+      setRunningWorkspaceId(null);
       showErrorToast(err, "Resume Project Failed");
-    }
-  };
-
-  const handleResumeNewTab = async (projectId: string) => {
-    try {
-      const sessionInfo = await openProject(projectId);
-      if (sessionInfo) {
-        const url = `/project/${projectId}/editor?session=${encodeURIComponent(sessionInfo.session_id)}`;
-        window.open(url, "_blank");
-      }
-    } catch (err: any) {
-      showErrorToast(err, "Open Project Failed");
-    }
-  };
-
-  const handleDeleteProject = async (projectId: string) => {
-    if (confirm("Are you sure you want to delete this project? This action cannot be undone.")) {
-      try {
-        await deleteProject(projectId);
-        showSuccessToast("Project deleted successfully");
-        listProjects();
-        setActiveMenuProjectId(null);
-      } catch (err: any) {
-        showErrorToast(err, "Delete Project Failed");
-      }
     }
   };
 
@@ -218,7 +429,7 @@ export default function DashboardPage() {
     const details = act.details || {};
     const fileName = details.file_name || details.file_id || "";
     const shortName = fileName.split("/").pop() || "";
-    
+
     switch (type) {
       case "files_edited":
         return `Edited ${shortName || "a file"}`;
@@ -273,6 +484,7 @@ export default function DashboardPage() {
 
   const hour = new Date().getHours();
   const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+  const firstName = user?.name?.split(" ")[0] || user?.username || "Developer";
 
   // Sort projects by updated_at descending
   const sortedProjects = [...projects].sort(
@@ -282,344 +494,433 @@ export default function DashboardPage() {
   const heroProject = sortedProjects[0];
   const otherProjects = sortedProjects.slice(1, 1 + RECENT_PROJECT_LIMIT);
 
+  // Overview metrics calculation
+  const OVERVIEW_METRICS = [
+    { label: "Projects", value: String(projects.length), icon: Database, color: "#5B9BD4" },
+    { label: "Blueprints", value: "2", icon: GitFork, color: "#4CAF7D" },
+    { label: "Deployments", value: "12", icon: Rocket, color: "#D4A84B" },
+    { label: "Storage", value: "1.2 GB", icon: HardDrive, color: "#C0624A" },
+    { label: "Current Plan", value: "Pro", icon: CreditCard, color: "#9FD7A7" },
+    { label: "AI Credits", value: "840", icon: Zap, color: "#5B9BD4" },
+  ];
+
   return (
     <div className="min-h-full bg-background">
-      {/* Top bar header */}
-      <header className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-border px-4 md:px-8 h-14 flex items-center justify-between">
-        <div>
-          <h1 className="text-base font-semibold text-foreground tracking-tight leading-tight">
-            {greeting}, {user?.name?.split(" ")[0] || user?.username || "Developer"}.
-          </h1>
-          <p className="text-[10px] md:text-xs text-muted-foreground mt-0.5 font-medium">Ready to build something?</p>
-        </div>
-        <button
-          onClick={() => navigate("/projects/create")}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-primary-foreground text-xs font-semibold rounded-md hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        >
-          <Plus size={14} />
-          New Project
-        </button>
-      </header>
+      <div className="max-w-6xl mx-auto px-6 md:px-8 py-8">
 
-      <div className="max-w-5xl mx-auto px-4 md:px-8 py-6 md:py-8 space-y-6">
-        
-        {/* Main Grid: Hero + Quick Actions */}
-        <div className="grid md:grid-cols-3 gap-5">
-          
-          {/* Continue Working (Hero Card Slot) */}
-          <div className="md:col-span-2 flex flex-col">
-            <h2 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-2.5">
-              Continue Working
-            </h2>
-            
-            {heroProject ? (
-              <div className="bg-card border border-border rounded-lg p-5 flex flex-col justify-between flex-1 relative group hover:border-border/80 transition-all">
-                <div>
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="size-9 rounded-md bg-primary/10 flex items-center justify-center shrink-0 border border-primary/20">
-                        <FileCode size={18} className="text-primary" />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <h3 className="font-semibold text-foreground text-sm">{heroProject.name}</h3>
-                          {heroProject.role && heroProject.role !== "owner" && (
-                            <span className="rounded-full border border-primary/30 bg-primary/10 px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-primary">
-                              shared
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-[10px] text-muted-foreground mt-0.5">
-                          Active branch: <span className="font-semibold text-foreground/80">{heroProject.branch || "main"}</span>
-                        </p>
-                      </div>
-                    </div>
+        {/* ── Welcome Back Banner ── */}
+        {showWelcomeBack && (
+          <WelcomeBackBanner
+            onDismiss={() => setShowWelcomeBack(false)}
+            heroProject={heroProject}
+            handleResume={handleResume}
+          />
+        )}
 
-                    <div className="relative" ref={dropdownRef}>
-                      <button
-                        onClick={() => setActiveMenuProjectId(activeMenuProjectId === heroProject.id ? null : heroProject.id)}
-                        className="p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
-                      >
-                        <MoreVertical size={15} />
-                      </button>
-
-                      {activeMenuProjectId === heroProject.id && (
-                        <div className="absolute right-0 mt-1 w-44 rounded-md border border-border bg-popover text-popover-foreground shadow-lg z-20 py-1 focus:outline-none">
-                          <button
-                            onClick={() => handleResume(heroProject.id)}
-                            className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-left hover:bg-muted transition-colors font-medium"
-                          >
-                            <Play size={12} /> Resume
-                          </button>
-                          <button
-                            onClick={() => handleResumeNewTab(heroProject.id)}
-                            className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-left hover:bg-muted transition-colors font-medium"
-                          >
-                            <ExternalLink size={12} /> Open in New Tab
-                          </button>
-                          <button
-                            onClick={() => navigate(`/project/${heroProject.id}/settings`)}
-                            className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-left hover:bg-muted transition-colors font-medium"
-                          >
-                            <Edit2 size={12} /> Settings / Rename
-                          </button>
-                          <div className="border-t border-border my-1" />
-                          <button
-                            onClick={() => handleDeleteProject(heroProject.id)}
-                            className="w-full flex items-center gap-2 px-3 py-1.5 text-xs text-left text-destructive hover:bg-destructive/10 transition-colors font-medium"
-                          >
-                            <Trash2 size={12} /> Delete Project
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <p className="text-xs text-muted-foreground leading-relaxed mt-4 line-clamp-3">
-                    {heroProject.description || "No description provided."}
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-between border-t border-border/80 pt-4 mt-6">
-                  <span className="text-[10px] text-muted-foreground font-medium">
-                    Last active {new Date(heroProject.updated_at).toLocaleDateString()}
-                  </span>
+        {/* ── Hero ── */}
+        <section className="mb-8">
+          <div className="flex items-start justify-between gap-6 flex-wrap lg:flex-nowrap">
+            <div>
+              <h1
+                className="text-3xl md:text-4xl font-semibold text-foreground mb-2 leading-tight"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                {greeting}, {firstName}.
+              </h1>
+              <p className="text-base text-muted-foreground mb-6">Ready to build something today?</p>
+              <div className="flex items-center gap-3 flex-wrap">
+                {heroProject && (
                   <button
                     onClick={() => handleResume(heroProject.id)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-primary-foreground text-xs font-semibold rounded-md hover:bg-primary/95 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shrink-0 shadow-sm"
+                    className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-xl hover:bg-primary/90 transition-colors"
                   >
-                    <Play size={11} />
-                    Resume Session
+                    <Play size={14} />
+                    Resume Workspace
                   </button>
-                </div>
-              </div>
-            ) : (
-              <div className="bg-card border border-border border-dashed rounded-lg p-8 flex flex-col items-center justify-center text-center flex-1">
-                <FolderPlus size={32} className="text-muted-foreground/80 mb-3" />
-                <p className="text-sm font-semibold text-foreground">Create your first project</p>
-                <p className="text-xs text-muted-foreground mt-1 max-w-[280px] leading-relaxed">
-                  Start coding from scratch or import a repository to begin collaborating.
-                </p>
+                )}
                 <button
                   onClick={() => navigate("/projects/create")}
-                  className="mt-4 px-4 py-2 bg-primary text-primary-foreground text-xs font-semibold rounded-md hover:bg-primary/90 transition-colors"
+                  className="flex items-center gap-2 px-5 py-2.5 border border-border text-foreground text-sm font-medium rounded-xl hover:bg-muted transition-colors"
                 >
+                  <Plus size={14} />
                   New Project
                 </button>
               </div>
+            </div>
+
+            {/* Desktop workspace snapshot widget */}
+            {heroProject && (
+              <div className="hidden lg:flex items-center gap-5 shrink-0 bg-surface border border-border rounded-2xl px-5 py-4">
+                <div className="text-center">
+                  <p className="text-[10px] text-muted-foreground mb-0.5">Workspace</p>
+                  <p className="text-sm font-semibold text-foreground truncate max-w-[120px]">{heroProject.name}</p>
+                </div>
+                <div className="h-8 w-px bg-border" />
+                <div className="text-center">
+                  <p className="text-[10px] text-muted-foreground mb-1">Collaborators</p>
+                  <div className="flex items-center gap-1.5 justify-center">
+                    <div className="flex -space-x-1.5">
+                      {["#5B9BD4", "#D4A84B"].map((c, i) => (
+                        <div key={i} className="size-4 rounded-full border border-surface" style={{ backgroundColor: c }} />
+                      ))}
+                    </div>
+                    <span className="text-[10px] text-success font-medium">{friends.filter(f => (f.presence?.state || f.mode) !== 'offline').length} online</span>
+                  </div>
+                </div>
+                <div className="h-8 w-px bg-border" />
+                <div className="text-center">
+                  <p className="text-[10px] text-muted-foreground mb-0.5">Branch</p>
+                  <p className="text-sm font-semibold text-foreground">{heroProject.branch || "main"}</p>
+                </div>
+                <div className="h-8 w-px bg-border" />
+                <div className="text-center">
+                  <p className="text-[10px] text-muted-foreground mb-0.5">Last active</p>
+                  <p className="text-sm font-semibold text-foreground">{new Date(heroProject.updated_at).toLocaleDateString()}</p>
+                </div>
+              </div>
             )}
           </div>
+        </section>
 
-          {/* Quick Actions */}
-          <div className="flex flex-col">
-            <h2 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-2.5">
-              Quick Actions
-            </h2>
-            <div className="bg-card border border-border rounded-lg p-5 flex flex-col justify-between flex-1 space-y-3">
-              <button
-                onClick={() => navigate("/projects/create")}
-                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md border border-border hover:border-primary/40 hover:bg-muted transition-all text-left group"
-              >
-                <div className="size-8 rounded bg-primary/10 flex items-center justify-center shrink-0 border border-primary/20">
-                  <Plus size={15} className="text-primary" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-foreground">New Project</p>
-                  <p className="text-[10px] text-muted-foreground">Start from blank canvas or templates</p>
-                </div>
-                <ArrowRight size={13} className="text-muted-foreground ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-              </button>
+        {/* ── Continue Working ── */}
+        {heroProject && (
+          <section className="mb-8">
+            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">
+              Continue working
+            </p>
+            <ActiveWorkspaceCard
+              heroProject={heroProject}
+              handleResume={handleResume}
+              sortedFriends={sortedFriends}
+              isRunning={runningWorkspaceId === heroProject.id}
+            />
+          </section>
+        )}
 
-              <button
-                onClick={() => setIsRepoSelectOpen(true)}
-                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md border border-border hover:border-primary/40 hover:bg-muted transition-all text-left group"
-              >
-                <div className="size-8 rounded bg-primary/10 flex items-center justify-center shrink-0 border border-primary/20">
-                  <Link2 size={15} className="text-primary" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-foreground">Import Repository</p>
-                  <p className="text-[10px] text-muted-foreground">Connect and import GitHub repository</p>
-                </div>
-                <ArrowRight size={13} className="text-muted-foreground ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-              </button>
-
-              <button
-                onClick={() => {
-                  const wsId = prompt("Enter Workspace / Session ID to join:");
-                  if (wsId) navigate(`/project/join?session=${encodeURIComponent(wsId)}`);
-                }}
-                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-md border border-border hover:border-primary/40 hover:bg-muted transition-all text-left group"
-              >
-                <div className="size-8 rounded bg-primary/10 flex items-center justify-center shrink-0 border border-primary/20">
-                  <UserPlus size={15} className="text-primary" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-foreground">Join Workspace</p>
-                  <p className="text-[10px] text-muted-foreground">Connect to a live shared session ID</p>
-                </div>
-                <ArrowRight size={13} className="text-muted-foreground ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-              </button>
+        {/* ── Recent Workspaces + Activity ── */}
+        <section className="mb-8 grid lg:grid-cols-5 gap-5">
+          {/* Recent Workspaces — idle, no resource bars */}
+          <div className="lg:col-span-2">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
+                Recent workspaces
+              </p>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => navigate("/dashboard/projects")}
+                  className="text-[10px] text-primary hover:underline"
+                >
+                  View all
+                </button>
+                <span className="text-muted-foreground/30 text-[10px]">·</span>
+                <span className="text-[9px] text-muted-foreground/50 uppercase tracking-wide">idle</span>
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* Secondary Grid: Recent Projects + Activity Feed + Collaborators */}
-        <div className="grid md:grid-cols-3 gap-5">
+            {otherProjects.length > 0 ? (
+              <div className="bg-surface border border-border rounded-2xl divide-y divide-border/60">
+                {otherProjects.slice(0, 4).map((ws) => (
+                  <div
+                    key={ws.id}
+                    className="flex items-center gap-3 px-4 py-3.5 group hover:bg-muted/30 transition-colors"
+                  >
+                    {/* Grey dot = idle, not consuming resources */}
+                    <span className="size-1.5 rounded-full bg-muted-foreground/30 shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-foreground">{ws.name}</p>
+                      <div className="flex items-center gap-2 text-[10px] text-muted-foreground mt-0.5">
+                        <GitBranch size={9} />
+                        <span>{ws.branch || "main"}</span>
+                        <span>·</span>
+                        <span>{new Date(ws.updated_at).toLocaleDateString()}</span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => handleResume(ws.id)}
+                      className="text-[10px] font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity shrink-0 hover:underline"
+                    >
+                      Resume
+                    </button>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="bg-surface border border-border rounded-2xl p-6 text-center text-xs text-muted-foreground">
+                No other projects.
+              </div>
+            )}
 
-          {/* Recent Projects List */}
-          <div className="flex flex-col md:col-span-2">
-            <div className="flex items-center justify-between mb-2.5">
-              <h2 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-                Recent Projects
-              </h2>
-              <button
-                onClick={() => navigate("/dashboard/projects")}
-                className="text-[10px] font-semibold text-primary hover:underline rounded"
-              >
-                View all
-              </button>
-            </div>
-            <div className="bg-card border border-border rounded-lg p-5 flex-1">
-              {otherProjects.length > 0 ? (
-                <div className="grid sm:grid-cols-2 gap-3.5">
-                  {otherProjects.map((p) => {
-                    const adaptedProj = {
-                      id: p.id,
-                      name: p.name,
-                      description: p.description || "",
-                      language: "TypeScript",
-                      branch: p.branch || "main",
-                      lastActive: new Date(p.updated_at).toLocaleDateString(),
-                      collaborators: 1,
-                      tags: ["web"],
-                      role: p.role,
-                    };
+            {/* Collaborator presence below workspaces */}
+            <div className="mt-5">
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
+                  Collaborators
+                </p>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => navigate("/friends")}
+                    className="text-[10px] text-primary hover:underline"
+                  >
+                    Manage
+                  </button>
+                  <span className="text-muted-foreground/30 text-[10px]">·</span>
+                  <button
+                    onClick={() => {
+                      const wsId = prompt("Enter Workspace / Session ID to join:");
+                      if (wsId) navigate(`/project/join?session=${encodeURIComponent(wsId)}`);
+                    }}
+                    className="text-[10px] text-primary hover:underline"
+                  >
+                    Join Session
+                  </button>
+                </div>
+              </div>
+
+              {sortedFriends.length > 0 ? (
+                <div className="bg-surface border border-border rounded-2xl divide-y divide-border/60">
+                  {sortedFriends.slice(0, 5).map((p) => {
+                    const state = p.presence?.state || p.mode || "offline";
+                    const online = state !== "offline";
                     return (
-                      <ProjectCard
-                        key={p.id}
-                        project={adaptedProj}
-                        compact
-                        onClick={() => handleResume(p.id)}
-                      />
+                      <div key={p.uid} className="flex items-center gap-3 px-4 py-3 hover:bg-muted/30 transition-colors">
+                        <Avatar name={p.name || p.username} presenceMode={state} size="sm" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-medium text-foreground">{p.name || p.username}</p>
+                          <p className="text-[10px] text-muted-foreground mt-0.5 truncate">
+                            {getFriendActivityDescription(p)}
+                          </p>
+                        </div>
+                        {online && (
+                          <button
+                            onClick={() => {
+                              if (p.presence?.projectId) {
+                                handleResume(p.presence.projectId);
+                              } else {
+                                const wsId = prompt("Enter Workspace / Session ID to join:");
+                                if (wsId) navigate(`/project/join?session=${encodeURIComponent(wsId)}`);
+                              }
+                            }}
+                            className="text-[10px] font-medium text-primary hover:underline shrink-0"
+                          >
+                            Join
+                          </button>
+                        )}
+                      </div>
                     );
                   })}
                 </div>
               ) : (
-                <div className="flex flex-col items-center justify-center py-12 text-center">
-                  <p className="text-xs text-muted-foreground">Nothing here yet.</p>
+                <div className="bg-surface border border-border rounded-2xl p-6 text-center text-xs text-muted-foreground">
+                  Teammates you add will appear here.
                 </div>
               )}
             </div>
           </div>
 
           {/* Activity Feed */}
-          <div className="flex flex-col">
-            <h2 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-2.5">
-              Activity Feed
-            </h2>
-            <div className="bg-card border border-border rounded-lg p-4 flex flex-col h-[280px]">
-              <div className="space-y-3.5 overflow-y-auto pr-1 flex-1">
-                {recentActivities.map((act, index) => (
-                  <div key={act.id || index} className="flex items-start gap-2.5 text-xs">
-                    <div className="size-5 rounded bg-muted flex items-center justify-center shrink-0 border border-border/60">
-                      {getActivityIcon(act.event_type)}
+          <div className="lg:col-span-3">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
+                Activity
+              </p>
+              <button
+                onClick={() => navigate("/dashboard/devlogs")}
+                className="text-[10px] text-primary hover:underline"
+              >
+                View all
+              </button>
+            </div>
+            {recentActivities.length > 0 ? (
+              <div className="bg-surface border border-border rounded-2xl divide-y divide-border/50">
+                {recentActivities.slice(0, 7).map((item, index) => {
+                  return (
+                    <div
+                      key={item.id || index}
+                      className="flex items-start gap-3 px-4 py-3.5 hover:bg-muted/30 transition-colors"
+                    >
+                      <div className="size-6 rounded-lg flex items-center justify-center shrink-0 mt-0.5 bg-primary/10 border border-primary/20">
+                        {getActivityIcon(item.event_type)}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-medium text-foreground leading-snug">{formatActivityMessage(item)}</p>
+                        <p className="text-[10px] text-muted-foreground mt-0.5 truncate">
+                          {item.details?.branch || item.details?.file_name || ""}
+                        </p>
+                      </div>
+                      <span className="text-[10px] text-muted-foreground shrink-0 mt-0.5 tabular-nums">{formatRelativeTime(item.created_at)}</span>
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-foreground font-medium leading-tight truncate">
-                        {formatActivityMessage(act)}
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="bg-surface border border-border rounded-2xl p-8 text-center text-xs text-muted-foreground">
+                No recent activity.
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* ── Blueprint Activity (user's published blueprint analytics) ── */}
+        <section className="mb-8">
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
+              Blueprint activity
+            </p>
+            <button
+              onClick={() => navigate("/dashboard/deployments")}
+              className="text-[10px] text-primary hover:underline"
+            >
+              View all blueprints
+            </button>
+          </div>
+
+          {/* TODO: Connect real backend APIs for blueprint activities and analytics */}
+          <div className="bg-surface border border-border rounded-2xl p-6">
+            <div className="flex items-start gap-4">
+              <div
+                className="size-12 rounded-2xl flex items-center justify-center shrink-0 text-2xl"
+                style={{ backgroundColor: `${MY_BLUEPRINT.color}12` }}
+              >
+                {MY_BLUEPRINT.emoji}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2.5 mb-1 flex-wrap">
+                  <p className="text-sm font-semibold text-foreground">{MY_BLUEPRINT.name}</p>
+                  {MY_BLUEPRINT.verified && <CheckCircle2 size={12} className="text-primary" />}
+                  <span className="text-[10px] font-mono text-muted-foreground">{MY_BLUEPRINT.version}</span>
+                  <span className="text-[10px] text-muted-foreground ml-auto">Published {MY_BLUEPRINT.publishedAt}</span>
+                </div>
+                <p className="text-xs text-muted-foreground mb-5 leading-relaxed">{MY_BLUEPRINT.desc}</p>
+
+                {/* Stats */}
+                <div className="flex items-end gap-8 flex-wrap">
+                  {[
+                    { value: MY_BLUEPRINT.launches, label: "launches", accent: false },
+                    { value: MY_BLUEPRINT.forks, label: "forks", accent: false },
+                    { value: MY_BLUEPRINT.starsToday, label: "stars today", accent: false },
+                  ].map(({ value, label }) => (
+                    <div key={label}>
+                      <p
+                        className="text-2xl font-semibold text-foreground leading-none"
+                        style={{ fontFamily: "var(--font-display)" }}
+                      >
+                        {value}
                       </p>
-                      <span className="text-[9px] text-muted-foreground">
-                        {formatRelativeTime(act.created_at)}
-                      </span>
+                      <p className="text-[10px] text-muted-foreground mt-1">{label}</p>
                     </div>
+                  ))}
+                  <div className="ml-auto text-right">
+                    <p className="text-base font-semibold text-success">{MY_BLUEPRINT.trend}</p>
+                    <p className="text-[10px] text-muted-foreground mt-1">vs last week</p>
                   </div>
-                ))}
-                {recentActivities.length === 0 && (
-                  <div className="flex flex-col items-center justify-center py-12 text-center h-full">
-                    <Clock size={20} className="text-muted-foreground/60 mb-2" />
-                    <p className="text-[11px] text-muted-foreground font-medium">No recent activity.</p>
-                    <p className="text-[9px] text-muted-foreground mt-0.5">Start building something!</p>
-                  </div>
-                )}
+                </div>
               </div>
             </div>
           </div>
+        </section>
 
-        </div>
+        {/* ── Marketplace Preview ── */}
+        <section className="mb-8">
+          <div className="bg-surface border border-border rounded-2xl p-5">
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+              <div>
+                <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-1">
+                  Marketplace
+                </p>
+                <p className="text-sm font-semibold text-foreground">Discover on Marketplace</p>
+              </div>
+              <button
+                onClick={() => navigate("/dashboard/marketplace")}
+                className="flex items-center gap-1.5 px-4 py-2 border border-border text-foreground text-xs font-medium rounded-xl hover:bg-muted hover:border-primary/30 transition-all"
+              >
+                <ShoppingBag size={12} />
+                Explore all
+                <ArrowRight size={11} className="text-muted-foreground" />
+              </button>
+            </div>
 
-        {/* Collaborators Panel */}
-        <div className="flex flex-col">
-          <div className="flex items-center justify-between mb-2.5">
-            <h2 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-              Collaborators
-            </h2>
-          </div>
-          <div className="bg-card border border-border rounded-lg p-5">
-            <div className="space-y-3.5 overflow-y-auto max-h-[220px] pr-1">
-              {sortedFriends.map((f) => {
-                const state = f.presence?.state || f.mode || "offline";
-                return (
-                  <div key={f.uid} className="flex items-center justify-between group py-1 border-b border-border/40 last:border-0">
-                    <div
-                      onClick={() => navigate(`/profile/${f.username}`)}
-                      className="flex items-center gap-3 min-w-0 flex-1 cursor-pointer hover:opacity-85 transition-opacity"
-                    >
-                      <Avatar name={f.name || f.username} presenceMode={state} />
-                      <div className="min-w-0 flex-1">
-                        <p className="text-xs font-semibold text-foreground leading-tight hover:text-primary transition-colors truncate">
-                          {f.name || f.username}
-                        </p>
-                        <p className="text-[10px] text-muted-foreground truncate mt-0.5 font-medium">
-                          {getFriendActivityDescription(f)}
-                        </p>
-                      </div>
-                    </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {MARKETPLACE_FEATURED.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => navigate("/dashboard/marketplace")}
+                  className="flex items-center gap-3 p-3.5 border border-border rounded-xl hover:border-primary/30 hover:bg-muted/50 transition-all text-left group"
+                >
+                  <div
+                    className="size-9 rounded-xl flex items-center justify-center shrink-0 text-xl"
+                    style={{ backgroundColor: `${item.color}12` }}
+                  >
+                    {item.emoji}
                   </div>
-                );
-              })}
-              {friends.length === 0 && (
-                <div className="py-6 text-center">
-                  <p className="text-xs text-muted-foreground">Invite teammates to collaborate.</p>
-                </div>
-              )}
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold text-foreground truncate">{item.name}</p>
+                    <p className="text-[10px] text-muted-foreground">{item.category}</p>
+                    <p className="text-[9px] text-primary font-medium mt-0.5">{item.badge}</p>
+                  </div>
+                </button>
+              ))}
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Bottom Achievements */}
-        <div className="bg-card border border-border rounded-lg p-5">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-              Recent achievements
-            </h2>
-            <button
-              onClick={() => navigate("/achievements")}
-              className="text-xs text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
-            >
+        {/* ── Overview metrics ── */}
+        <section className="mb-8">
+          <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest mb-3">
+            Overview
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            {OVERVIEW_METRICS.map((m) => {
+              const Icon = m.icon;
+              return (
+                <div key={m.label} className="bg-surface border border-border rounded-2xl p-4 flex flex-col gap-3">
+                  <div
+                    className="size-8 rounded-xl flex items-center justify-center"
+                    style={{ backgroundColor: `${m.color}15` }}
+                  >
+                    <Icon size={14} style={{ color: m.color }} />
+                  </div>
+                  <div>
+                    <p
+                      className="text-xl font-semibold text-foreground leading-none"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      {m.value}
+                    </p>
+                    <p className="text-[10px] text-muted-foreground mt-1">{m.label}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ── Achievements ── */}
+        <section className="pb-8">
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
+              Achievements
+            </p>
+            <button onClick={() => navigate("/profile")} className="text-[10px] text-primary hover:underline">
               View all
             </button>
           </div>
-          <div className="flex flex-wrap gap-2.5">
-            {(user?.achievements || [])
-              .slice()
-              .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-              .slice(0, 4)
-              .map((a) => (
+          <div className="flex flex-wrap gap-2">
+            {user?.achievements && user.achievements.length > 0 ? (
+              user.achievements.map((a: any) => (
                 <div
                   key={a.id}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-muted border border-border text-xs"
                   title={a.description}
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl bg-surface border border-border hover:border-primary/30 transition-colors"
                 >
-                  <span>{a.icon}</span>
-                  <span className="text-foreground text-xs font-semibold">{a.name}</span>
+                  <span className="text-sm">{a.icon}</span>
+                  <span className="text-xs font-medium text-foreground">{a.name}</span>
                 </div>
-              ))}
-            {(!user?.achievements || user.achievements.length === 0) && (
-              <p className="text-[11px] text-muted-foreground py-1">No achievements unlocked yet.</p>
+              ))
+            ) : (
+              <p className="text-xs text-muted-foreground">No achievements unlocked yet.</p>
             )}
           </div>
-        </div>
+        </section>
 
       </div>
 

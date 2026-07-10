@@ -12,6 +12,8 @@ import {
   ChevronRight,
   Users,
   Trophy,
+  ShoppingBag,
+  Rocket,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import type { ReactNode } from "react";
@@ -32,6 +34,8 @@ type Screen =
   | "devlogs"
   | "releases"
   | "projects"
+  | "marketplace"
+  | "deployments"
   | "project-create"
   | "notifications"
   | "achievements"
@@ -46,13 +50,19 @@ interface NavItem {
   icon: ReactNode;
 }
 
-const NAV_ITEMS: NavItem[] = [
+const WORKSPACE_ITEMS: NavItem[] = [
   { label: "Dashboard", screen: "dashboard", icon: <LayoutDashboard size={16} /> },
   { label: "Projects", screen: "projects", icon: <FolderKanban size={16} /> },
+  { label: "Marketplace", screen: "marketplace", icon: <ShoppingBag size={16} /> },
+  { label: "Deployments", screen: "deployments", icon: <Rocket size={16} /> },
+];
+
+const COMMUNITY_ITEMS: NavItem[] = [
   { label: "Docs", screen: "docs", icon: <BookOpen size={16} /> },
   { label: "Devlogs", screen: "devlogs", icon: <Scroll size={16} /> },
   { label: "Releases", screen: "releases", icon: <Tag size={16} /> },
 ];
+
 
 interface AppShellProps {
   children: ReactNode;
@@ -70,6 +80,8 @@ export function AppShell({ children }: AppShellProps) {
   const getPath = (scr: string) => {
     if (scr === "dashboard") return "/dashboard";
     if (scr === "projects") return "/dashboard/projects";
+    if (scr === "marketplace") return "/dashboard/marketplace";
+    if (scr === "deployments") return "/dashboard/deployments";
     if (scr === "docs") return "/dashboard/docs";
     if (scr === "devlogs") return "/dashboard/devlogs";
     if (scr === "releases") return "/dashboard/releases";
@@ -88,6 +100,8 @@ export function AppShell({ children }: AppShellProps) {
   else if (path.includes("/devlog")) screen = "devlogs";
   else if (path.includes("/releases")) screen = "releases";
   else if (path.includes("/projects")) screen = "projects";
+  else if (path.includes("/marketplace")) screen = "marketplace";
+  else if (path.includes("/deployments")) screen = "deployments";
   else if (path.startsWith("/notifications")) screen = "notifications";
   else if (path.startsWith("/achievements")) screen = "achievements";
   else if (path.startsWith("/friends")) screen = "friends";
@@ -162,8 +176,14 @@ export function AppShell({ children }: AppShellProps) {
         </button>
 
         {/* Nav */}
-        <nav className="flex-1 py-3 flex flex-col gap-0.5 px-2 overflow-y-auto">
-          {NAV_ITEMS.map((item) => {
+        <nav className="flex-1 py-4 flex flex-col gap-1.5 px-2 overflow-y-auto">
+          {/* Workspace section */}
+          {!collapsed && (
+            <div className="px-2.5 py-1 text-[9px] font-bold text-muted-foreground/60 uppercase tracking-widest hidden lg:block mb-1">
+              WORKSPACE
+            </div>
+          )}
+          {WORKSPACE_ITEMS.map((item) => {
             const active = screen === item.screen;
             const showLabel = !collapsed;
             return (
@@ -172,7 +192,35 @@ export function AppShell({ children }: AppShellProps) {
                 onClick={() => navigate(getPath(item.screen))}
                 className={`flex items-center gap-2.5 rounded-md px-2.5 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring w-full ${
                   active
-                    ? "bg-primary/10 text-primary font-medium"
+                    ? "bg-primary/10 text-primary font-semibold"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                } ${collapsed ? "justify-center" : "lg:justify-start justify-center"}`}
+                title={item.label}
+              >
+                <span className="shrink-0">{item.icon}</span>
+                {showLabel && <span className="truncate hidden lg:inline">{item.label}</span>}
+              </button>
+            );
+          })}
+
+          <div className="my-2 border-t border-border/40" />
+
+          {/* Community section */}
+          {!collapsed && (
+            <div className="px-2.5 py-1 text-[9px] font-bold text-muted-foreground/60 uppercase tracking-widest hidden lg:block mb-1">
+              COMMUNITY
+            </div>
+          )}
+          {COMMUNITY_ITEMS.map((item) => {
+            const active = screen === item.screen;
+            const showLabel = !collapsed;
+            return (
+              <button
+                key={item.screen}
+                onClick={() => navigate(getPath(item.screen))}
+                className={`flex items-center gap-2.5 rounded-md px-2.5 py-2 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring w-full ${
+                  active
+                    ? "bg-primary/10 text-primary font-semibold"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted"
                 } ${collapsed ? "justify-center" : "lg:justify-start justify-center"}`}
                 title={item.label}
@@ -183,6 +231,7 @@ export function AppShell({ children }: AppShellProps) {
             );
           })}
         </nav>
+
 
         {/* Bottom section */}
         <div className="border-t border-border py-3 px-2 flex flex-col gap-0.5">

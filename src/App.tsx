@@ -31,6 +31,8 @@ function PresenceManager() {
 // Lazy load page components
 const HomePage = lazy(() => import('./pages/HomePage'))
 const DashboardPage = lazy(() => import('./pages/DashboardPage'))
+const MarketplacePage = lazy(() => import('./pages/MarketplacePage'))
+const DeploymentsPage = lazy(() => import('./pages/DeploymentsPage'))
 const ProfilePage = lazy(() => import('./pages/ProfilePage'))
 const EditorPage = lazy(() => import('./pages/EditorPage'))
 const FAQPage = lazy(() => import('./pages/FAQPage'))
@@ -172,6 +174,26 @@ function App() {
                             <ProtectedRoute>
                               <ErrorBoundary level="page">
                                 <DashboardPage />
+                              </ErrorBoundary>
+                            </ProtectedRoute>
+                          }
+                        />
+                        <Route
+                          path="/dashboard/marketplace"
+                          element={
+                            <ProtectedRoute>
+                              <ErrorBoundary level="page">
+                                <MarketplacePage />
+                              </ErrorBoundary>
+                            </ProtectedRoute>
+                          }
+                        />
+                        <Route
+                          path="/dashboard/deployments"
+                          element={
+                            <ProtectedRoute>
+                              <ErrorBoundary level="page">
+                                <DeploymentsPage />
                               </ErrorBoundary>
                             </ProtectedRoute>
                           }
