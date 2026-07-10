@@ -41,6 +41,7 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 const UsernameSetupPage = lazy(() => import('./pages/UsernameSetupPage'))
 const AuthPage = lazy(() => import('./pages/AuthPage'))
 const ProPage = lazy(() => import('./pages/ProPage'))
+const PricingPage = lazy(() => import('./pages/PricingPage'))
 const ThemeTestPage = lazy(() => import('./pages/ThemeTestPage'))
 const SocketTestPage = lazy(() => import('./pages/SocketTestPage'))
 const ErrorTestPage = lazy(() => import('./pages/ErrorTestPage'))
@@ -143,6 +144,7 @@ function App() {
                       <Route path="/faq" element={<FAQPage />} />
                       <Route path="/about" element={<AboutPage />} />
                       <Route path="/pro" element={<ProPage />} />
+                      <Route path="/pricing" element={<PricingPage />} />
                       <Route path="/stripe" element={<StripePage />} />
                       <Route path="/docs/*" element={<DocsPage />} />
                       <Route path="/changelog/*" element={<ReleaseNotesPage />} />
