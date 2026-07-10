@@ -264,7 +264,7 @@ export default function SettingsSectionAccount() {
                             </div>
                         </div>
                         <button
-                            onClick={() => navigate('/pricing')}
+                            onClick={() => navigate('/pro')}
                             className="px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary text-sm font-medium transition-all"
                             style={{ color: settings.accentColor, backgroundColor: `${settings.accentColor}11` }}
                         >

@@ -601,37 +601,11 @@ function EditorPage() {
   }, [leaveSession])
 
   // ===== CODING SESSION HEARTBEAT =====
-  // Ping server every 10 seconds to keep terminal container alive
-  // When tab closes, heartbeat stops and container is cleaned up after 30s
+  // Demo: heartbeat is a no-op (no backend server to ping)
   useEffect(() => {
     if (!isInSession || !session?.id) return
-
-    const tabId = Math.random().toString(36).substring(7)
-    console.log(`💓 Starting heartbeat for session ${session.id}, tab ${tabId}`)
-
-    const pingServer = async () => {
-      try {
-        await fetch(`/api/sessions/${session.id}/heartbeat`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ tab_id: tabId }),
-        })
-      } catch (error) {
-        console.error('Heartbeat failed:', error)
-      }
-    }
-
-    // Initial ping
-    pingServer()
-
-    // Ping every 10 seconds
-    const heartbeatInterval = setInterval(pingServer, 10000)
-
-    // Cleanup on unmount (tab close)
-    return () => {
-      clearInterval(heartbeatInterval)
-      console.log(`💔 Heartbeat stopped for session ${session.id}, tab ${tabId}`)
-    }
+    // No-op in demo mode — production pings /api/sessions/{id}/heartbeat every 10s
+    return () => {}
   }, [isInSession, session?.id])
 
   // Cleanup session on unmount
@@ -895,7 +869,7 @@ function EditorPage() {
           )
 
           if (confirmed) {
-            window.open('/pricing', '_blank')
+            window.open('/pro', '_blank')
           }
         } catch (err) {
           console.error('[EditorPage] Error showing dialog:', err)

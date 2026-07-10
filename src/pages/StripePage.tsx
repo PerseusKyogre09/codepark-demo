@@ -17,10 +17,10 @@ export default function StripePage() {
                     <Button
                         variant="secondary"
                         size="sm"
-                        onClick={() => navigate('/pricing')}
+                        onClick={() => navigate('/pro')}
                         className="flex items-center gap-2"
                     >
-                        <ArrowLeft className="w-4 h-4" /> Back to Pricing
+                        <ArrowLeft className="w-4 h-4" /> Back to Pro
                     </Button>
                     <h1 className="text-2xl font-bold tracking-tight" style={{ color: themeColors.text }}>
                         Processing Payment...

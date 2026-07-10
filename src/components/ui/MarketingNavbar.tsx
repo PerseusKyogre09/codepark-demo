@@ -40,7 +40,7 @@ export function MarketingNavbar() {
         <nav
             className="fixed top-0 w-full z-50 px-5 md:px-6 py-5 md:py-6"
             style={{
-                background: `linear-gradient(180deg, ${themeColors.terminalBg} 0%, rgba(14, 14, 19, 0.92) 100%)`
+                background: themeColors.terminalBg
             }}
         >
             <style>{`
@@ -60,26 +60,6 @@ export function MarketingNavbar() {
                 .glitch-border-nav:hover::before {
                     opacity: 1;
                     animation: glitch-anim-nav 0.2s infinite;
-                }
-                .navbar-link {
-                    position: relative;
-                    transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
-                }
-                .navbar-link::after {
-                    content: '';
-                    position: absolute;
-                    left: 14px;
-                    right: 14px;
-                    bottom: 7px;
-                    height: 1px;
-                    background: linear-gradient(90deg, transparent, rgba(63, 255, 139, 0.45), transparent);
-                    transform: scaleX(0);
-                    transform-origin: center;
-                    transition: transform 180ms ease;
-                }
-                .navbar-link:hover::after,
-                .navbar-link:focus-visible::after {
-                    transform: scaleX(1);
                 }
                 @keyframes glitch-anim-nav {
                     0% { transform: translate(0); }
@@ -101,8 +81,7 @@ export function MarketingNavbar() {
                     <span style={{
                         color: themeColors.terminalPrimary,
                         fontFamily: 'Space Grotesk',
-                        fontSize: '24px',
-                        letterSpacing: '-0.04em'
+                        fontSize: '24px'
                     }}>
                         CodePark
                     </span>
@@ -112,51 +91,55 @@ export function MarketingNavbar() {
                 <div className="hidden md:flex items-center space-x-2.5">
                     <button 
                         onClick={() => navigate('/docs')}
-                        className="navbar-link font-label px-3.5 py-2 text-sm font-medium tracking-[0.01em] transition-colors rounded-full hover:bg-muted/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        className="font-label text-xs uppercase tracking-[0.2em] transition-colors hover:text-primary"
                         style={{
                             color: themeColors.terminalSecondary,
                             fontFamily: 'JetBrains Mono',
+                            fontSize: '11px'
                         }}
                     >
                         /docs
                     </button>
                     <button 
                         onClick={() => navigate('/faq')}
-                        className="navbar-link font-label px-3.5 py-2 text-sm font-medium tracking-[0.01em] transition-colors rounded-full hover:bg-muted/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        className="font-label text-xs uppercase tracking-[0.2em] transition-colors hover:text-primary"
                         style={{
                             color: themeColors.terminalSecondary,
                             fontFamily: 'JetBrains Mono',
+                            fontSize: '11px'
                         }}
                     >
                         /faq
                     </button>
                     <button 
                         onClick={() => navigate('/changelog')}
-                        className="navbar-link font-label px-3.5 py-2 text-sm font-medium tracking-[0.01em] transition-colors rounded-full hover:bg-muted/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        className="font-label text-xs uppercase tracking-[0.2em] transition-colors hover:text-primary"
                         style={{
                             color: themeColors.terminalSecondary,
                             fontFamily: 'JetBrains Mono',
+                            fontSize: '11px'
                         }}
                     >
                         /changelog
                     </button>
                     <button 
-                        onClick={() => navigate('/pricing')}
-                        className="navbar-link font-label px-3.5 py-2 text-sm font-semibold tracking-[0.01em] transition-colors rounded-full hover:bg-primary/10 hover:text-foreground flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        onClick={() => navigate('/pro')}
+                        className="font-label text-xs uppercase tracking-[0.2em] transition-colors hover:text-primary flex items-center gap-1"
                         style={{
                             color: themeColors.terminalPrimary,
                             fontFamily: 'JetBrains Mono',
+                            fontSize: '11px'
                         }}
                     >
-                        <Crown className="w-3 h-3" /> /pricing
+                        <Crown className="w-3 h-3" /> /pro
                     </button>
                 </div>
 
                 {/* Right Section - Theme Toggle & CTA */}
-                <div className="flex items-center gap-3 md:gap-4">
+                <div className="flex items-center gap-4">
                     <button
                         onClick={toggleTheme}
-                        className="p-2 rounded-full transition-all hover:bg-muted/60"
+                        className="p-2 rounded-lg transition-all"
                         title={`Switch to ${settings.uiTheme === 'dark' ? 'light' : 'dark'} mode`}
                     >
                         <FontAwesomeIcon
@@ -176,7 +159,7 @@ export function MarketingNavbar() {
                                     setTerminalMenuOpen(!terminalMenuOpen)
                                 }
                             }}
-                            className="p-2 rounded-full transition-all hover:bg-muted/60 hover:opacity-100"
+                            className="p-2 rounded-lg transition-all hover:opacity-80"
                             title={isAuthenticated ? "Terminal menu" : "Login"}
                         >
                             {isAuthenticated ? (
@@ -288,7 +271,7 @@ export function MarketingNavbar() {
                     {/* Mobile Menu Button */}
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className="md:hidden p-2 rounded-full transition-colors hover:bg-muted/60"
+                        className="md:hidden p-2"
                     >
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6" style={{ color: '#f8f5fd' }}>
                             <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -301,40 +284,40 @@ export function MarketingNavbar() {
 
             {/* Mobile Menu */}
             {mobileMenuOpen && (
-                <div className="md:hidden mt-5 space-y-4 pb-5" style={{
-                    borderTop: `1px solid rgba(63, 255, 139, 0.12)`,
-                    paddingTop: '20px'
+                <div className="md:hidden mt-6 space-y-4 pb-6" style={{
+                    borderTop: `1px solid ${themeColors.terminalBorder}`,
+                    paddingTop: '24px'
                 }}>
                     <button 
                         onClick={() => { navigate('/docs'); setMobileMenuOpen(false) }}
-                        className="block w-full text-left px-4 py-2.5 rounded-lg transition-colors"
+                        className="block w-full text-left px-4 py-2 transition-colors"
                         style={{ color: themeColors.terminalSecondary, fontFamily: 'JetBrains Mono' }}
                     >
                         /docs
                     </button>
                     <button 
                         onClick={() => { navigate('/faq'); setMobileMenuOpen(false) }}
-                        className="block w-full text-left px-4 py-2.5 rounded-lg transition-colors"
+                        className="block w-full text-left px-4 py-2 transition-colors"
                         style={{ color: themeColors.terminalSecondary, fontFamily: 'JetBrains Mono' }}
                     >
                         /faq
                     </button>
                     <button 
                         onClick={() => { navigate('/changelog'); setMobileMenuOpen(false) }}
-                        className="block w-full text-left px-4 py-2.5 rounded-lg transition-colors"
+                        className="block w-full text-left px-4 py-2 transition-colors"
                         style={{ color: themeColors.terminalSecondary, fontFamily: 'JetBrains Mono' }}
                     >
                         /changelog
                     </button>
                     <button
-                        onClick={() => { navigate('/pricing'); setMobileMenuOpen(false) }}
-                        className="block w-full text-left px-4 py-2.5 rounded-lg text-sm uppercase tracking-widest transition-all font-semibold flex items-center gap-2"
+                        onClick={() => { navigate('/pro'); setMobileMenuOpen(false) }}
+                        className="block w-full text-left px-4 py-2 text-sm uppercase tracking-widest transition-all font-bold flex items-center gap-2"
                         style={{
                             color: themeColors.terminalPrimary,
                             fontFamily: 'JetBrains Mono'
                         }}
                     >
-                        <Crown className="w-4 h-4" /> /pricing
+                        <Crown className="w-4 h-4" /> /pro
                     </button>
                     {isAuthenticated ? (
                         <>
@@ -347,7 +330,7 @@ export function MarketingNavbar() {
                             </button>
                             {terminalMenuOpen && (
                                 <div
-                                    className="mt-2 rounded-xl overflow-hidden"
+                                    className="mt-2 rounded-lg overflow-hidden"
                                     style={{
                                         border: `1px solid ${themeColors.terminalPrimary}`,
                                         background: `rgba(${settings.uiTheme === 'dark' ? '14, 14, 19' : '249, 250, 251'}, 0.9)`,
@@ -370,7 +353,7 @@ export function MarketingNavbar() {
                                             setMobileMenuOpen(false)
                                             setTerminalMenuOpen(false)
                                         }}
-                                        className="block w-full text-left px-4 py-2.5 text-sm transition-colors"
+                                        className="block w-full text-left px-4 py-2 text-sm transition-colors"
                                         style={{ color: themeColors.terminalPrimary, fontFamily: 'JetBrains Mono' }}
                                     >
                                         &gt; Dashboard
@@ -381,7 +364,7 @@ export function MarketingNavbar() {
                                             setMobileMenuOpen(false)
                                             setTerminalMenuOpen(false)
                                         }}
-                                        className="block w-full text-left px-4 py-2.5 text-sm transition-colors"
+                                        className="block w-full text-left px-4 py-2 text-sm transition-colors"
                                         style={{ color: '#00d4ec', fontFamily: 'JetBrains Mono' }}
                                     >
                                         &gt; Profile
@@ -399,7 +382,7 @@ export function MarketingNavbar() {
                                             setMobileMenuOpen(false)
                                             setTerminalMenuOpen(false)
                                         }}
-                                        className="block w-full text-left px-4 py-2.5 text-sm transition-colors"
+                                        className="block w-full text-left px-4 py-2 text-sm transition-colors"
                                         style={{ color: '#ff6b6b', fontFamily: 'JetBrains Mono' }}
                                     >
                                         &gt; Logout
@@ -410,7 +393,7 @@ export function MarketingNavbar() {
                     ) : (
                         <button
                             onClick={() => { navigate('/auth'); setMobileMenuOpen(false) }}
-                            className="w-full text-left px-4 py-2.5 text-sm transition-colors flex items-center gap-2 mt-4 rounded-lg"
+                            className="w-full text-left px-4 py-2 text-sm transition-colors flex items-center gap-2 mt-4"
                             style={{ color: themeColors.terminalPrimary, fontFamily: 'JetBrains Mono' }}
                         >
                             <Power className="w-4 h-4" /> &gt; login

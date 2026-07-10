@@ -465,7 +465,7 @@ export default function ProjectSettingsModal({
                                                         try {
                                                             const res = await apiClient.uploadProjectBackground(project.id, file);
                                                             if (res.success) {
-                                                                setBackgroundImage(res.image_url);
+                                                                setBackgroundImage(res.image_url || null);
                                                                 // Trigger parent refresh
                                                                 if (onProjectUpdated) {
                                                                     onProjectUpdated();
