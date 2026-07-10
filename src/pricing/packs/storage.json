@@ -1,0 +1,19 @@
+{
+  "id": "storage",
+  "slug": "storage",
+  "name": "Storage Pack",
+  "description": "More room for files, artifacts, and project assets.",
+  "summary": "Adds extra storage without changing your plan.",
+  "order": 4,
+  "status": "active",
+  "visibility": "public",
+  "featured": false,
+  "currency": "INR",
+  "prices": {
+    "INR": { "amount": 999, "display": "₹999" },
+    "USD": { "amount": 12, "display": "$12" }
+  },
+  "price": [{ "currency": "USD", "amount": 12, "interval": "month", "display": "$12" }],
+  "ctaLabel": "Add Pack",
+  "features": [{ "id": "projects.unlimited", "status": "optional" }]
+}

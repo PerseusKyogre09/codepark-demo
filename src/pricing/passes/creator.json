@@ -1,0 +1,19 @@
+{
+  "id": "creator",
+  "slug": "creator",
+  "name": "Creator Pass",
+  "description": "For solo builders who publish often and need a little extra room.",
+  "summary": "Temporary access with stronger limits for content-driven work.",
+  "order": 3,
+  "status": "active",
+  "visibility": "public",
+  "featured": false,
+  "currency": "INR",
+  "prices": {
+    "INR": { "amount": 999, "display": "₹999" },
+    "USD": { "amount": 12, "display": "$12" }
+  },
+  "price": [{ "currency": "USD", "amount": 12, "interval": "one-time", "display": "$12" }],
+  "ctaLabel": "Use Pass",
+  "features": [{ "id": "ai.high", "status": "included" }]
+}

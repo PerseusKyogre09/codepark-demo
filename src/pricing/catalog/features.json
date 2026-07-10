@@ -1,0 +1,15 @@
+[
+  { "id": "projects.unlimited", "label": "Unlimited projects", "category": "Projects", "order": 10 },
+  { "id": "collaboration.realtime", "label": "Real-time collaboration", "category": "Collaboration", "order": 20 },
+  { "id": "environments.community", "label": "Community environments", "category": "Environments", "order": 30 },
+  { "id": "environments.private", "label": "Private environments", "category": "Environments", "order": 40 },
+  { "id": "runtime.standard", "label": "Standard execution", "category": "Runtime", "order": 50 },
+  { "id": "runtime.pro", "label": "Pro runtimes", "category": "Runtime", "order": 60 },
+  { "id": "ai.basic", "label": "Basic AI usage", "category": "AI", "order": 70 },
+  { "id": "ai.high", "label": "Higher AI usage limits", "category": "AI", "order": 80 },
+  { "id": "support.community", "label": "Community support", "category": "Support", "order": 90 },
+  { "id": "support.priority", "label": "Priority support", "category": "Support", "order": 100 },
+  { "id": "domains.custom", "label": "Custom domains", "category": "Deployment", "order": 110 },
+  { "id": "team.collaborators.10", "label": "Up to 10 collaborators", "category": "Teams", "order": 120 },
+  { "id": "team.collaborators.unlimited", "label": "Unlimited collaborators", "category": "Teams", "order": 130 }
+]

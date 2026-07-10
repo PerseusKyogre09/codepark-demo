@@ -1,0 +1,45 @@
+{
+  "id": "pro",
+  "slug": "pro",
+  "name": "Pro",
+  "description": "For serious developers who need more power and control.",
+  "summary": "Higher execution limits, stronger AI access, and more customization for daily work.",
+  "order": 2,
+  "status": "active",
+  "visibility": "public",
+  "featured": true,
+  "badge": "Most popular",
+  "currency": "INR",
+  "prices": {
+    "INR": { "amount": 1499, "display": "₹1,499", "note": "per person / month" },
+    "USD": { "amount": 18, "display": "$18", "note": "per person / month" }
+  },
+  "billing": {
+    "monthly": {
+      "INR": { "amount": 1499, "display": "₹1,499", "note": "per person / month" },
+      "USD": { "amount": 18, "display": "$18", "note": "per person / month" }
+    },
+    "yearly": {
+      "INR": { "amount": 14990, "display": "₹14,990", "note": "per person / year · save 17%" },
+      "USD": { "amount": 180, "display": "$180", "note": "per person / year · save 17%" }
+    }
+  },
+  "price": [
+    { "currency": "USD", "amount": 18, "interval": "month", "display": "$18", "note": "per person" }
+  ],
+  "ctaLabel": "Start a Team",
+  "features": [
+    { "id": "projects.unlimited", "status": "included" },
+    { "id": "runtime.pro", "status": "included" },
+    { "id": "ai.high", "status": "included" },
+    { "id": "support.priority", "status": "included" },
+    { "id": "domains.custom", "status": "included" },
+    { "id": "team.collaborators.unlimited", "status": "included" }
+  ],
+  "comparison": {
+    "projects": "Unlimited",
+    "collaboration": "Unlimited collaborators",
+    "ai": "Higher limits",
+    "support": "Priority support"
+  }
+}

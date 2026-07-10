@@ -1,0 +1,44 @@
+{
+  "id": "enterprise",
+  "slug": "enterprise",
+  "name": "Enterprise",
+  "description": "For organizations with security, procurement, and scale requirements.",
+  "summary": "Custom pricing, account controls, and enterprise deployment options.",
+  "order": 4,
+  "status": "active",
+  "visibility": "public",
+  "featured": false,
+  "currency": "INR",
+  "prices": {
+    "INR": { "amount": "Contact sales", "display": "Contact Sales" },
+    "USD": { "amount": "Contact sales", "display": "Contact Sales" }
+  },
+  "billing": {
+    "monthly": {
+      "INR": { "amount": "Contact sales", "display": "Contact Sales" },
+      "USD": { "amount": "Contact sales", "display": "Contact Sales" }
+    },
+    "yearly": {
+      "INR": { "amount": "Contact sales", "display": "Contact Sales" },
+      "USD": { "amount": "Contact sales", "display": "Contact Sales" }
+    }
+  },
+  "price": [
+    { "currency": "USD", "amount": 0, "interval": "month", "display": "Custom" }
+  ],
+  "ctaLabel": "Contact Sales",
+  "features": [
+    { "id": "projects.unlimited", "status": "included" },
+    { "id": "runtime.pro", "status": "included" },
+    { "id": "ai.high", "status": "included" },
+    { "id": "support.priority", "status": "included" },
+    { "id": "team.collaborators.unlimited", "status": "included" },
+    { "id": "domains.custom", "status": "included" }
+  ],
+  "comparison": {
+    "projects": "Unlimited",
+    "collaboration": "Org controls",
+    "ai": "Enterprise policy driven",
+    "support": "Custom SLA"
+  }
+}

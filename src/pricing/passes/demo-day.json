@@ -1,0 +1,19 @@
+{
+  "id": "demo-day",
+  "slug": "demo-day",
+  "name": "Demo Day Pass",
+  "description": "Designed for short-lived showcase environments.",
+  "summary": "Keeps demo projects available for a narrow window.",
+  "order": 6,
+  "status": "active",
+  "visibility": "public",
+  "featured": false,
+  "currency": "INR",
+  "prices": {
+    "INR": { "amount": 599, "display": "₹599" },
+    "USD": { "amount": 7, "display": "$7" }
+  },
+  "price": [{ "currency": "USD", "amount": 7, "interval": "one-time", "display": "$7" }],
+  "ctaLabel": "Use Pass",
+  "features": [{ "id": "environments.community", "status": "included" }]
+}

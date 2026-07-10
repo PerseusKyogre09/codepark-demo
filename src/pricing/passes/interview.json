@@ -1,0 +1,19 @@
+{
+  "id": "interview",
+  "slug": "interview",
+  "name": "Interview Pass",
+  "description": "A short access window for technical interviews and evaluations.",
+  "summary": "Keeps interviews lightweight without creating a full subscription.",
+  "order": 4,
+  "status": "active",
+  "visibility": "public",
+  "featured": false,
+  "currency": "INR",
+  "prices": {
+    "INR": { "amount": 399, "display": "₹399" },
+    "USD": { "amount": 5, "display": "$5" }
+  },
+  "price": [{ "currency": "USD", "amount": 5, "interval": "one-time", "display": "$5" }],
+  "ctaLabel": "Use Pass",
+  "features": [{ "id": "runtime.standard", "status": "included" }]
+}

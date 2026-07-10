@@ -1,0 +1,19 @@
+{
+  "id": "compute",
+  "slug": "compute",
+  "name": "Compute Pack",
+  "description": "Additional runtime capacity for demanding projects.",
+  "summary": "Use this when workloads outgrow the included runtime limits.",
+  "order": 2,
+  "status": "active",
+  "visibility": "public",
+  "featured": false,
+  "currency": "INR",
+  "prices": {
+    "INR": { "amount": 1999, "display": "₹1,999" },
+    "USD": { "amount": 25, "display": "$25" }
+  },
+  "price": [{ "currency": "USD", "amount": 25, "interval": "month", "display": "$25" }],
+  "ctaLabel": "Add Pack",
+  "features": [{ "id": "runtime.pro", "status": "optional" }]
+}

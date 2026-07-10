@@ -1,0 +1,19 @@
+{
+  "id": "hackathon",
+  "slug": "hackathon",
+  "name": "Hackathon Pass",
+  "description": "Short-lived access for hackathon teams and demo projects.",
+  "summary": "A time-boxed pass for collaborative bursts of building.",
+  "order": 1,
+  "status": "active",
+  "visibility": "public",
+  "featured": false,
+  "currency": "INR",
+  "prices": {
+    "INR": { "amount": 799, "display": "₹799" },
+    "USD": { "amount": 9, "display": "$9" }
+  },
+  "price": [{ "currency": "USD", "amount": 9, "interval": "one-time", "display": "$9" }],
+  "ctaLabel": "Use Pass",
+  "features": [{ "id": "environments.community", "status": "included" }]
+}

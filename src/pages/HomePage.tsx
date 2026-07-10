@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { HeroMockupEditor } from "../components/HeroMockupEditor";
+import { pricingCatalog } from "../pricing/loader";
 
 const FEATURES = [
   {
@@ -44,33 +45,15 @@ const TESTIMONIALS = [
   },
 ];
 
-const PRICING = [
-  {
-    name: "Personal",
-    price: "Free",
-    description: "For solo developers and open source projects.",
-    features: ["3 active projects", "Community environments", "ContextBase (basic)", "Changelog"],
-    cta: "Start Free",
-    highlighted: false,
-  },
-  {
-    name: "Team",
-    price: "$18",
-    period: "/person/mo",
-    description: "For small teams who build together.",
-    features: ["Unlimited projects", "Private environments", "Real-time collaboration", "ContextBase (full)", "Team profiles"],
-    cta: "Start a Team",
-    highlighted: true,
-  },
-  {
-    name: "Enterprise",
-    price: "Custom",
-    description: "For organizations with specific requirements.",
-    features: ["Everything in Team", "SSO & SCIM", "Audit logs", "Custom environments", "Priority support", "SLA guarantees"],
-    cta: "Talk to us",
-    highlighted: false,
-  },
-];
+const PRICING = pricingCatalog.plans.map((plan) => ({
+  name: plan.name,
+  price: plan.price[0]?.display ?? `${plan.price[0]?.amount ?? "Custom"}`,
+  period: plan.price[0]?.note ? ` ${plan.price[0].note}` : plan.price[0]?.interval === "month" ? "/month" : "",
+  description: plan.description,
+  features: plan.features.map((feature) => feature.label ?? feature.id),
+  cta: plan.ctaLabel,
+  highlighted: Boolean(plan.featured),
+}));
 
 const FAQS = [
   { q: "How is CodePark different from GitHub Codespaces?", a: "CodePark is built around collaboration, not just cloud development. Pair programming, presence indicators, shared terminals, and ContextBase are first-class features — not add-ons. The editor is the workshop; the rest of CodePark is the park." },

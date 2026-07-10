@@ -1,0 +1,19 @@
+{
+  "id": "deployment",
+  "slug": "deployment",
+  "name": "Deployment Pack",
+  "description": "More room for deployment-heavy projects.",
+  "summary": "A simple add-on for teams shipping frequently.",
+  "order": 3,
+  "status": "active",
+  "visibility": "public",
+  "featured": false,
+  "currency": "INR",
+  "prices": {
+    "INR": { "amount": 2499, "display": "₹2,499" },
+    "USD": { "amount": 29, "display": "$29" }
+  },
+  "price": [{ "currency": "USD", "amount": 29, "interval": "month", "display": "$29" }],
+  "ctaLabel": "Add Pack",
+  "features": [{ "id": "domains.custom", "status": "optional" }]
+}

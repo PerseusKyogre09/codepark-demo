@@ -1,0 +1,19 @@
+{
+  "id": "launch",
+  "slug": "launch",
+  "name": "Launch Pass",
+  "description": "For launches that need temporary extra support and capacity.",
+  "summary": "A launch-day pass for teams shipping publicly.",
+  "order": 5,
+  "status": "active",
+  "visibility": "public",
+  "featured": false,
+  "currency": "INR",
+  "prices": {
+    "INR": { "amount": 1499, "display": "₹1,499" },
+    "USD": { "amount": 20, "display": "$20" }
+  },
+  "price": [{ "currency": "USD", "amount": 20, "interval": "one-time", "display": "$20" }],
+  "ctaLabel": "Use Pass",
+  "features": [{ "id": "support.priority", "status": "included" }]
+}

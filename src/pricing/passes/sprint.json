@@ -1,0 +1,19 @@
+{
+  "id": "sprint",
+  "slug": "sprint",
+  "name": "Sprint Pass",
+  "description": "Useful for short delivery cycles and temporary team access.",
+  "summary": "A practical pass for a focused shipping window.",
+  "order": 2,
+  "status": "active",
+  "visibility": "public",
+  "featured": false,
+  "currency": "INR",
+  "prices": {
+    "INR": { "amount": 1199, "display": "₹1,199" },
+    "USD": { "amount": 15, "display": "$15" }
+  },
+  "price": [{ "currency": "USD", "amount": 15, "interval": "one-time", "display": "$15" }],
+  "ctaLabel": "Buy Pass",
+  "features": [{ "id": "runtime.pro", "status": "included" }]
+}

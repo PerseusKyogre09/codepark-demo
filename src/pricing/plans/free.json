@@ -1,0 +1,44 @@
+{
+  "id": "free",
+  "slug": "free",
+  "name": "Free",
+  "description": "For solo developers and open source projects.",
+  "summary": "A lightweight starting point for trying CodePark with real-time collaboration and shared environments.",
+  "order": 1,
+  "status": "active",
+  "visibility": "public",
+  "featured": false,
+  "currency": "INR",
+  "prices": {
+    "INR": { "amount": 0, "display": "Free" },
+    "USD": { "amount": 0, "display": "Free" }
+  },
+  "billing": {
+    "monthly": {
+      "INR": { "amount": 0, "display": "Free" },
+      "USD": { "amount": 0, "display": "Free" }
+    },
+    "yearly": {
+      "INR": { "amount": 0, "display": "Free" },
+      "USD": { "amount": 0, "display": "Free" }
+    }
+  },
+  "price": [
+    { "currency": "USD", "amount": 0, "interval": "month", "display": "Free" }
+  ],
+  "ctaLabel": "Start Free",
+  "features": [
+    { "id": "projects.unlimited", "status": "included" },
+    { "id": "runtime.standard", "status": "included" },
+    { "id": "ai.basic", "status": "included" },
+    { "id": "support.community", "status": "included" },
+    { "id": "team.collaborators.10", "status": "included" },
+    { "id": "environments.community", "status": "included" }
+  ],
+  "comparison": {
+    "projects": "3 active projects",
+    "collaboration": "Shared with teammates",
+    "ai": "Basic usage",
+    "support": "Community support"
+  }
+}

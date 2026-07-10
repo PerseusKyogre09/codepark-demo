@@ -1,0 +1,19 @@
+{
+  "id": "ai",
+  "slug": "ai",
+  "name": "AI Pack",
+  "description": "Extra project-aware AI capacity for heavier workflows.",
+  "summary": "Useful when you need more assistant usage than a plan includes.",
+  "order": 1,
+  "status": "active",
+  "visibility": "public",
+  "featured": false,
+  "currency": "INR",
+  "prices": {
+    "INR": { "amount": 1499, "display": "₹1,499" },
+    "USD": { "amount": 19, "display": "$19" }
+  },
+  "price": [{ "currency": "USD", "amount": 19, "interval": "month", "display": "$19" }],
+  "ctaLabel": "Add Pack",
+  "features": [{ "id": "ai.high", "status": "optional" }]
+}

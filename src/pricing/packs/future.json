@@ -1,0 +1,15 @@
+{
+  "id": "future",
+  "slug": "future",
+  "name": "Future Pack",
+  "description": "Reserved for future add-ons and seasonal offers.",
+  "summary": "A placeholder slot that can be replaced without changing the architecture.",
+  "order": 999,
+  "status": "hidden",
+  "visibility": "internal",
+  "featured": false,
+  "currency": "USD",
+  "price": [{ "currency": "USD", "amount": 0, "interval": "month", "display": "Coming soon" }],
+  "ctaLabel": "Coming Soon",
+  "features": []
+}
