@@ -846,7 +846,7 @@ class FakeApiClient {
     return { success: true }
   }
 
-  async saveFilestoFirebase(_sessionId: string): Promise<{ success: boolean }> {
+  async saveFilesToDatabase(_sessionId: string): Promise<{ success: boolean }> {
     // No-op in demo mode
     return { success: true }
   }

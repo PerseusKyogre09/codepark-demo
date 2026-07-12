@@ -151,7 +151,7 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) =>
     clientIdentityRef.current = clientIdentity;
   }, [clientIdentity]);
   // Color source separation:
-  //   Authenticated users → backend-owned user.color (from Firestore via /auth/me)
+  //   Authenticated users → backend-owned user.color (from database via /auth/me)
   //                         The backend assigns a unique random color on first login.
   //                         This is now stable across all devices for the same account.
   //   Guests             → getStableCollaboratorColor() (localStorage, no UID key)

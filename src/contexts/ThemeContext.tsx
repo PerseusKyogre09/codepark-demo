@@ -273,7 +273,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     }
   }, []);
 
-  // Update settings and persist to localStorage (and optionally Firestore)
+  // Update settings and persist to localStorage (and optionally database)
   const updateSettings = (newSettings: Partial<UserSettings>, persistToBackend: boolean = true) => {
     const updated = { ...settings, ...newSettings };
     if (updated.uiTheme !== 'dark' && updated.uiTheme !== 'light') {
@@ -292,7 +292,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
     if (persistToBackend) {
       apiClient.updateUISettings(updated).catch((err) => {
-        console.error('[ThemeContext] Failed to persist settings to Firestore:', err);
+        console.error('[ThemeContext] Failed to persist settings to database:', err);
       });
     }
   };

@@ -762,7 +762,7 @@ function PrivacySettings() {
     setSaving(true);
     setSuccess(false);
     try {
-      // Update hidden cards configuration in firestore as well
+      // Update hidden cards configuration in database as well
       const hiddenCards = [];
       if (!showHeatmap) hiddenCards.push("activity");
       await apiClient.updateDisplaySettings(["activity", "achievements", "streak"], hiddenCards);

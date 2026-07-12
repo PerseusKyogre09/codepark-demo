@@ -1336,7 +1336,7 @@ function EditorPage() {
         }
       }
 
-      await apiClient.saveFilestoFirebase(session.id);
+      await apiClient.saveFilesToDatabase(session.id);
 
 
       await apiClient.saveProject({
@@ -1388,7 +1388,7 @@ function EditorPage() {
         }
 
         try {
-          await apiClient.saveFilestoFirebase(session.id)
+          await apiClient.saveFilesToDatabase(session.id)
           isDirtyRef.current = false
           console.log('[EditorPage] Autosave completed successfully')
         } catch (error) {

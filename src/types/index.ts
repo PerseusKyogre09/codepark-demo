@@ -67,7 +67,7 @@ export interface Project {
   updated_at: string;
   active_file?: string;
   recent_files?: string[];
-  storage_type: 'git' | 'workspace' | 'firestore';
+  storage_type: 'git' | 'workspace' | 'database';
   git_commit_hash?: string;
   all_files?: string[];
   owner_id?: string;
